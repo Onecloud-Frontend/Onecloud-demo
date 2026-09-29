@@ -19,17 +19,17 @@ export const Footer: React.FC = () => {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <span>© 2026 <strong>One Enterprise Cloud</strong>. All rights reserved.</span>
+        <span>© 2026 <strong>One Enterprise Cloud</strong></span>
         <span>•</span>
-        <span style={{ color: 'var(--text-secondary)' }}>Version: 1.0.0-demo</span>
+        <span style={{ color: 'var(--text-secondary)' }}>Version: 1.0.0</span>
         <span>•</span>
-        <span style={{ color: 'var(--status-info)' }}>Environment: Development (Demo Mode)</span>
+        <span style={{ color: 'var(--text-secondary)' }}>Environment: Development</span>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <button
           type="button"
-          onClick={() => setModalText('Enterprise Privacy Policy placeholder: Compliant with enterprise multi-tenant data isolation standards.')}
+          onClick={() => setModalText('Enterprise Privacy Policy: Confidential multi-tenant data governance.')}
           style={{ color: 'var(--text-muted)', fontSize: '12px' }}
         >
           Privacy Policy
@@ -37,7 +37,7 @@ export const Footer: React.FC = () => {
         <span>•</span>
         <button
           type="button"
-          onClick={() => setModalText('Terms of Service placeholder: Enterprise SaaS licensing terms apply.')}
+          onClick={() => setModalText('Enterprise Terms of Service apply.')}
           style={{ color: 'var(--text-muted)', fontSize: '12px' }}
         >
           Terms of Service
@@ -45,10 +45,10 @@ export const Footer: React.FC = () => {
         <span>•</span>
         <button
           type="button"
-          onClick={() => setModalText('Support placeholder: Please contact the Lead Frontend Architecture Team at architecture@oneenterprise.internal.')}
-          style={{ color: 'var(--brand-primary)', fontSize: '12px', fontWeight: 500 }}
+          onClick={() => setModalText('Support: Contact your system administrator.')}
+          style={{ color: 'var(--text-muted)', fontSize: '12px' }}
         >
-          Architecture Support
+          Support
         </button>
       </div>
 

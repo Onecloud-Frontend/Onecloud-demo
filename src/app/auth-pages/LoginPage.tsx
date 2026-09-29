@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, Input, Badge } from '@shared/components';
+import { Button, Input } from '@shared/components';
 import { useAuth } from '@core/auth';
 
 export const LoginPage: React.FC = () => {
@@ -26,9 +26,9 @@ export const LoginPage: React.FC = () => {
     const newErrors: { email?: string; password?: string } = {};
 
     if (!email.trim()) {
-      newErrors.email = 'Email address or corporate username is required';
+      newErrors.email = 'Email address is required';
     } else if (!/\S+@\S+\.\S+/.test(email.trim()) && !email.includes('admin')) {
-      newErrors.email = 'Please provide a valid corporate email (e.g. user@oneenterprise.internal)';
+      newErrors.email = 'Please provide a valid corporate email';
     }
 
     if (!password) {
@@ -73,34 +73,9 @@ export const LoginPage: React.FC = () => {
         position: 'relative',
       }}
     >
-      {/* Top Banner indicating local demo auth */}
       <div
         style={{
-          maxWidth: '480px',
-          width: '100%',
-          marginBottom: '20px',
-          padding: '12px 16px',
-          backgroundColor: 'rgba(99, 102, 241, 0.1)',
-          border: '1px solid rgba(99, 102, 241, 0.3)',
-          borderRadius: 'var(--radius-md)',
-          fontSize: '12.5px',
-          color: 'var(--text-secondary)',
-          display: 'flex',
-          alignItems: 'flex-start',
-          gap: '10px',
-        }}
-      >
-        <span style={{ fontSize: '16px' }}>ℹ️</span>
-        <div>
-          <strong style={{ color: '#818cf8' }}>Demo Authentication Mode: </strong>
-          Backend authentication service is pending deployment. This login operates entirely via local state in{' '}
-          <code>@core/auth</code> without live network requests.
-        </div>
-      </div>
-
-      <div
-        style={{
-          maxWidth: '480px',
+          maxWidth: '440px',
           width: '100%',
           backgroundColor: 'var(--bg-card)',
           border: '1px solid var(--border-subtle)',
@@ -141,7 +116,7 @@ export const LoginPage: React.FC = () => {
             One Enterprise Cloud
           </h1>
           <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '4px' }}>
-            Unified Enterprise Portal • 3-Team Monorepo
+            Enterprise Management Workspace
           </p>
         </div>
 
@@ -165,12 +140,12 @@ export const LoginPage: React.FC = () => {
         {/* Login Form */}
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           <Input
-            label="Corporate Email or Username"
+            label="Corporate Email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             error={errors.email}
-            placeholder="architect@oneenterprise.internal"
+            placeholder="user@oneenterprise.internal"
             disabled={isLoading}
             autoComplete="username"
           />
@@ -181,7 +156,7 @@ export const LoginPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             error={errors.password}
-            placeholder="Enter your corporate password"
+            placeholder="Enter password"
             allowPasswordToggle
             disabled={isLoading}
             autoComplete="current-password"
@@ -223,7 +198,7 @@ export const LoginPage: React.FC = () => {
                 color: 'var(--text-secondary)',
               }}
             >
-              Demo notice: Corporate password resets are managed via IAM SSO when the backend is connected.
+              Please contact your administrator to reset corporate credentials.
               <button
                 type="button"
                 onClick={() => setForgotPasswordNotice(false)}
@@ -240,30 +215,9 @@ export const LoginPage: React.FC = () => {
             disabled={isLoading}
             style={{ width: '100%', marginTop: '6px', height: '42px' }}
           >
-            {isLoading ? 'Authenticating...' : 'Sign In to Workspace'}
+            {isLoading ? 'Signing In...' : 'Sign In'}
           </Button>
         </form>
-
-        {/* Demo Credentials Helper */}
-        <div
-          style={{
-            marginTop: '24px',
-            paddingTop: '18px',
-            borderTop: '1px solid var(--border-subtle)',
-            fontSize: '12px',
-            color: 'var(--text-muted)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '6px',
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span>Demo Account:</span>
-            <Badge variant="core">Enterprise Admin</Badge>
-          </div>
-          <div>Login: <code>architect@oneenterprise.internal</code></div>
-          <div>Password: <code>DemoSecure123!</code></div>
-        </div>
       </div>
     </div>
   );

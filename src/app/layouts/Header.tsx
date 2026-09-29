@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Badge } from '@shared/components';
 import { activeDemoTenant } from '@core/tenant';
 import { useAuth } from '@core/auth';
 import {
@@ -9,13 +8,8 @@ import {
   Search,
   Bell,
   LogOut,
-  User as UserIcon,
   ChevronDown,
-  Building2,
-  Boxes,
-  Users as UsersIcon,
-  Briefcase,
-  LayoutDashboard
+  Building2
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -34,7 +28,6 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
   const userMenuRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
 
-  // Close menus when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
@@ -53,42 +46,17 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
     navigate('/login', { replace: true });
   };
 
-  // Determine current active module indicator
-  const getModuleIndicator = () => {
+  // Determine current active page/module title
+  const getPageTitle = () => {
     const path = location.pathname;
-    if (path.startsWith('/erp')) {
-      return {
-        name: 'ERP Team Workspace',
-        team: 'Team A Domain',
-        badgeVariant: 'team-a' as const,
-        icon: <Boxes size={16} />
-      };
-    }
-    if (path.startsWith('/crm')) {
-      return {
-        name: 'CRM Team Workspace',
-        team: 'Team B Domain',
-        badgeVariant: 'team-b' as const,
-        icon: <Briefcase size={16} />
-      };
-    }
-    if (path.startsWith('/hrms')) {
-      return {
-        name: 'HRMS Team Workspace',
-        team: 'Team C Domain',
-        badgeVariant: 'team-c' as const,
-        icon: <UsersIcon size={16} />
-      };
-    }
-    return {
-      name: 'Enterprise Dashboard',
-      team: 'Unified Monorepo',
-      badgeVariant: 'core' as const,
-      icon: <LayoutDashboard size={16} />
-    };
+    if (path.startsWith('/erp')) return 'ERP';
+    if (path.startsWith('/crm')) return 'CRM';
+    if (path.startsWith('/hrms')) return 'HRMS';
+    if (path.startsWith('/dashboard')) return 'Dashboard';
+    return 'Dashboard';
   };
 
-  const moduleInfo = getModuleIndicator();
+  const pageTitle = getPageTitle();
 
   return (
     <header
@@ -106,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
         backdropFilter: 'blur(8px)',
       }}
     >
-      {/* Left: Mobile Toggle + Logo + Current Module Indicator */}
+      {/* Left: Hamburger Toggle + Logo + App Title + Current Module Name */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <button
           onClick={onToggleSidebar}
@@ -126,7 +94,10 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
           {sidebarOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => navigate('/dashboard')}>
+        <div
+          style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
+          onClick={() => navigate('/dashboard')}
+        >
           <div
             style={{
               width: '32px',
@@ -144,32 +115,21 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
           >
             O
           </div>
-          <div>
-            <div style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-display)', letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>
-              ONE ENTERPRISE CLOUD
-            </div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-              Official Frontend Architecture
-            </div>
+          <div style={{ fontSize: '15px', fontWeight: 700, fontFamily: 'var(--font-display)', letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>
+            ONE ENTERPRISE CLOUD
           </div>
         </div>
 
-        <div style={{ height: '24px', width: '1px', backgroundColor: 'var(--border-subtle)' }} />
+        <div style={{ height: '20px', width: '1px', backgroundColor: 'var(--border-subtle)' }} />
 
-        {/* Dynamic Module Indicator */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>
-            <span style={{ color: 'var(--brand-primary)', display: 'flex', alignItems: 'center' }}>
-              {moduleInfo.icon}
-            </span>
-            <span>{moduleInfo.name}</span>
-          </div>
-          <Badge variant={moduleInfo.badgeVariant}>{moduleInfo.team}</Badge>
+        {/* Current Module Name */}
+        <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
+          {pageTitle}
         </div>
       </div>
 
-      {/* Middle: Universal Search Placeholder */}
-      <div style={{ flex: 1, maxWidth: '380px', margin: '0 24px' }}>
+      {/* Middle: Universal Search */}
+      <div style={{ flex: 1, maxWidth: '400px', margin: '0 28px' }}>
         <div
           style={{
             position: 'relative',
@@ -181,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
           <Search size={16} style={{ position: 'absolute', left: '12px', color: 'var(--text-muted)' }} />
           <input
             type="text"
-            placeholder="Search modules, features, docs (placeholder)..."
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
@@ -198,22 +158,9 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
         </div>
       </div>
 
-      {/* Right: Tenant, Notifications, User Menu */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        {/* Tenant Scope */}
-        <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Building2 size={16} style={{ color: 'var(--text-muted)' }} />
-          <div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Tenant</div>
-            <div style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--text-primary)' }}>
-              {activeDemoTenant.tenantName}
-            </div>
-          </div>
-        </div>
-
-        <div style={{ height: '24px', width: '1px', backgroundColor: 'var(--border-subtle)' }} />
-
-        {/* Notifications Placeholder */}
+      {/* Right: Notifications, Tenant, User Menu */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+        {/* Notifications */}
         <div style={{ position: 'relative' }} ref={notifRef}>
           <button
             onClick={() => setShowNotifications(!showNotifications)}
@@ -228,21 +175,9 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              position: 'relative',
             }}
           >
             <Bell size={17} />
-            <span
-              style={{
-                position: 'absolute',
-                top: '6px',
-                right: '6px',
-                width: '7px',
-                height: '7px',
-                borderRadius: '50%',
-                backgroundColor: 'var(--brand-primary)',
-              }}
-            />
           </button>
 
           {showNotifications && (
@@ -251,7 +186,7 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
                 position: 'absolute',
                 right: 0,
                 top: '46px',
-                width: '300px',
+                width: '260px',
                 backgroundColor: 'var(--bg-card)',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: 'var(--radius-md)',
@@ -260,13 +195,26 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
                 zIndex: 100,
               }}
             >
-              <div style={{ fontWeight: 600, fontSize: '13px', marginBottom: '8px' }}>Notifications (Demo)</div>
-              <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                Notification services are non-operational in this architectural demo. Real SSE/WebSocket streams connect through <code>@core/telemetry</code> when backend is deployed.
+              <div style={{ fontWeight: 600, fontSize: '13px', marginBottom: '6px' }}>Notifications</div>
+              <p style={{ fontSize: '12.5px', color: 'var(--text-secondary)' }}>
+                No unread notifications.
               </p>
             </div>
           )}
         </div>
+
+        {/* Tenant Scope */}
+        <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Building2 size={16} style={{ color: 'var(--text-muted)' }} />
+          <div>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Tenant</div>
+            <div style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--text-primary)' }}>
+              {activeDemoTenant.tenantName}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ height: '24px', width: '1px', backgroundColor: 'var(--border-subtle)' }} />
 
         {/* User Profile & Menu */}
         <div style={{ position: 'relative' }} ref={userMenuRef}>
@@ -297,14 +245,11 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
                 fontSize: '12px',
               }}
             >
-              {user?.name ? user.name.slice(0, 2).toUpperCase() : 'CA'}
+              {user?.name ? user.name.slice(0, 2).toUpperCase() : 'U'}
             </div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: '12.5px', fontWeight: 600, lineHeight: 1.2 }}>
-                {user?.name || 'Lead Architect'}
-              </div>
-              <div style={{ fontSize: '10.5px', color: 'var(--text-muted)' }}>
-                {user?.roles?.[0] || 'Enterprise Admin'}
+                {user?.name || 'User'}
               </div>
             </div>
             <ChevronDown size={14} style={{ color: 'var(--text-muted)' }} />
@@ -316,7 +261,7 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
                 position: 'absolute',
                 right: 0,
                 top: '46px',
-                width: '240px',
+                width: '220px',
                 backgroundColor: 'var(--bg-card)',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: 'var(--radius-md)',
@@ -329,13 +274,8 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
               }}
             >
               <div style={{ paddingBottom: '8px', borderBottom: '1px solid var(--border-subtle)' }}>
-                <div style={{ fontSize: '12.5px', fontWeight: 600 }}>{user?.email || 'architect@oneenterprise.internal'}</div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Tenant: {activeDemoTenant.tenantId}</div>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 8px', fontSize: '12.5px', color: 'var(--text-secondary)' }}>
-                <UserIcon size={14} />
-                <span>Session: Local Demo Mode</span>
+                <div style={{ fontSize: '12.5px', fontWeight: 600 }}>{user?.email}</div>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Tenant: {activeDemoTenant.tenantName}</div>
               </div>
 
               <button
@@ -357,7 +297,7 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onToggleSidebar }) 
                 }}
               >
                 <LogOut size={14} />
-                <span>Sign Out / Logout</span>
+                <span>Logout</span>
               </button>
             </div>
           )}
