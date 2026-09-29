@@ -5,10 +5,10 @@ import { AuthGuard } from '@app/guards/AuthGuard';
 import { LoginPage } from '@app/auth-pages/LoginPage';
 import { OverviewPage } from '@app/pages/OverviewPage';
 
-// The Three Primary Module Workspaces
-import { ErpHomePage } from '@features/erp';
-import { CrmHomePage } from '@features/crm';
-import { HrmsHomePage } from '@features/hrms';
+// Domain Route Modules
+import { erpRoutes } from '@features/erp';
+import { crmRoutes } from '@features/crm';
+import { hrmsRoutes } from '@features/hrms';
 
 import { NotFoundPage } from '@app/error-pages/NotFoundPage';
 
@@ -31,10 +31,10 @@ export const AppRouter: React.FC = () => {
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<OverviewPage />} />
 
-        {/* Business Modules */}
-        <Route path="erp" element={<ErpHomePage />} />
-        <Route path="crm" element={<CrmHomePage />} />
-        <Route path="hrms" element={<HrmsHomePage />} />
+        {/* Business Modules (Domain-Owned Routes) */}
+        {erpRoutes}
+        {crmRoutes}
+        {hrmsRoutes}
 
         {/* Catch-all 404 */}
         <Route path="*" element={<NotFoundPage />} />

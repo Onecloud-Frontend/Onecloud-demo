@@ -39,6 +39,12 @@
       ],
       "@assets/*": [
         "src/assets/*"
+      ],
+      "@mock/*": [
+        "src/mock/*"
+      ],
+      "@mock": [
+        "src/mock/index.ts"
       ]
     },
     "types": [
