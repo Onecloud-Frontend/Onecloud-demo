@@ -1,1 +1,2 @@
-export * from './pages/HrmsDemoPage';
+export * from './pages/HrmsHomePage';
+export * from './routes';

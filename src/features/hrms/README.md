@@ -1,30 +1,29 @@
-# Feature Domain: HRMS
+# Feature Domain: HRMS (Human Resource Management System)
 
 **Domain Boundary:** `src/features/hrms/`  
-**Demonstration Team Ownership:** Team B (Workforce & Collaboration)  
-*(Note: Team assignments are demonstration ownership and can be adjusted by the project lead. The architectural boundary rule is the permanent source of truth.)*
+**Official Team Ownership:** **Team C**  
+**Role:** Human Resource Management System domain foundation for One Enterprise Cloud.
 
-## Domain Purpose
-Human Resource Management System: employee profiles, onboarding, organization chart, attendance, and leave management.
-
-## When Product Development Begins, This Folder Will Contain:
+## Directory Structure
 ```
 src/features/hrms/
-├── components/     # Domain-specific UI components (not used outside this domain)
-├── hooks/          # Domain-specific React hooks (e.g. state, domain forms)
-├── api/            # Domain service queries/mutations consuming @core/api infrastructure
+├── pages/          # Routed views for HRMS (e.g. HrmsHomePage.tsx)
+├── components/     # HRMS domain-specific UI components
+├── hooks/          # HRMS domain-specific React hooks
+├── services/       # Domain service adapters consuming @core/api infrastructure
 ├── types/          # Domain TypeScript models, contracts, and view interfaces
-├── pages/          # Routed views for this domain
-└── tests/          # Domain-specific unit and integration tests
+├── constants/      # Feature-level constants
+├── utils/          # Domain helper functions
+├── routes/         # Internal route mappings
+├── index.ts        # Public entry point
+└── README.md
 ```
 
 ## Architectural Dependency Rules
 - **ALLOWED:**
-  - Import technical infrastructure from `@core` (e.g. auth context, tenant info, storage)
-  - Import domain-agnostic UI and helpers from `@shared` (e.g. Button, Card, formatters)
+  - Import technical infrastructure from `@core` (auth, tenant, permissions, API contracts).
+  - Import domain-agnostic UI and helpers from `@shared` (Button, Card, Input, formatters).
 - **STRICTLY PROHIBITED:**
-  - Importing from `src/app/` (features must never depend on application orchestration)
-  - Deep cross-feature imports into other `src/features/*` folders
-  - Injecting domain logic into `@shared` or `@core`
-  - Directly accessing databases or making arbitrary unauthorized network calls
-  - Bypassing core API transport infrastructure
+  - Direct imports into `src/features/erp/` or `src/features/crm/` (cross-feature coupling is blocked).
+  - Importing from `src/app/` (features cannot depend on application orchestration).
+  - Calling live backend APIs or inventing mock backend servers.

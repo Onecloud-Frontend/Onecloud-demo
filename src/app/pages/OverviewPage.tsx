@@ -1,26 +1,113 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageHeader, Card, Button, Badge } from '@shared/components';
+import { Boxes, Briefcase, Users as UsersIcon } from 'lucide-react';
 
 export const OverviewPage: React.FC = () => {
   return (
     <div>
       <PageHeader
-        breadcrumb="Executive Architecture Briefing"
-        title="One Enterprise Cloud Frontend Architecture"
-        description="Official React + TypeScript + Vite architecture demonstration showcasing domain-based feature separation, 3-team parallel velocity, and rigorous Git workflow guardrails."
-        badge={<Badge variant="core">Architecture Demo</Badge>}
+        breadcrumb="Enterprise Unified Dashboard"
+        title="One Enterprise Cloud Architecture & Team Base"
+        description="Official React + TypeScript + Vite architecture demonstration establishing the shared application shell and clean feature foundations for three engineering teams."
+        badge={<Badge variant="core">Base Shell Active</Badge>}
         actions={
           <div style={{ display: 'flex', gap: '8px' }}>
             <Link to="/git/workflow">
               <Button variant="secondary" size="sm">Git Workflow</Button>
             </Link>
             <Link to="/teams/ownership">
-              <Button variant="primary" size="sm">Team Matrix</Button>
+              <Button variant="primary" size="sm">Team Ownership</Button>
             </Link>
           </div>
         }
       />
+
+      {/* Primary 3-Team Foundations */}
+      <div style={{ marginBottom: '28px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+          <div>
+            <h2 style={{ fontSize: '18px', fontWeight: 700, fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>
+              Primary Three-Team Business Foundations
+            </h2>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              Dedicated feature folders for concurrent, collision-free development.
+            </p>
+          </div>
+          <Badge variant="success">All 3 Bases Initialized</Badge>
+        </div>
+
+        <div className="grid-cols-3">
+          {/* Team A -> ERP */}
+          <Card
+            title="Team A — ERP"
+            accent="team-a"
+            badge={<Badge variant="team-a">Team A</Badge>}
+            action={
+              <Link to="/erp">
+                <Button variant="team-a" size="sm">Open ERP Base</Button>
+              </Link>
+            }
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+              <Boxes size={20} style={{ color: 'var(--team-a-accent)' }} />
+              <div style={{ fontWeight: 600, fontSize: '14px' }}>Enterprise Resource Planning</div>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
+              Base workspace: <code>src/features/erp/</code>. Ready for procurement, inventory, and supply chain modules.
+            </p>
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+              Branch: <code>feature/team-a-erp-demo</code>
+            </div>
+          </Card>
+
+          {/* Team B -> CRM */}
+          <Card
+            title="Team B — CRM"
+            accent="team-b"
+            badge={<Badge variant="team-b">Team B</Badge>}
+            action={
+              <Link to="/crm">
+                <Button variant="team-b" size="sm">Open CRM Base</Button>
+              </Link>
+            }
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+              <Briefcase size={20} style={{ color: 'var(--team-b-accent)' }} />
+              <div style={{ fontWeight: 600, fontSize: '14px' }}>Customer Relationship Management</div>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
+              Base workspace: <code>src/features/crm/</code>. Ready for sales pipelines, customer accounts, and leads.
+            </p>
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+              Branch: <code>feature/team-b-crm-demo</code>
+            </div>
+          </Card>
+
+          {/* Team C -> HRMS */}
+          <Card
+            title="Team C — HRMS"
+            accent="team-c"
+            badge={<Badge variant="team-c">Team C</Badge>}
+            action={
+              <Link to="/hrms">
+                <Button variant="team-c" size="sm">Open HRMS Base</Button>
+              </Link>
+            }
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+              <UsersIcon size={20} style={{ color: 'var(--team-c-accent)' }} />
+              <div style={{ fontWeight: 600, fontSize: '14px' }}>Human Resource Management System</div>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
+              Base workspace: <code>src/features/hrms/</code>. Ready for workforce directory, leaves, and attendance.
+            </p>
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+              Branch: <code>feature/team-c-hrms-demo</code>
+            </div>
+          </Card>
+        </div>
+      </div>
 
       {/* 4 Architectural Layers Banner */}
       <div style={{ marginBottom: '28px' }}>
@@ -33,7 +120,7 @@ export const OverviewPage: React.FC = () => {
               <code>src/app/</code>
             </p>
             <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              Top-level bootstrap, application config, route definitions, layout scaffolds, guards, and cross-cutting error boundaries.
+              Top-level bootstrap, application config, routes, layout assembly, Header, Sidebar, Footer, and guards.
             </p>
           </Card>
 
@@ -51,7 +138,7 @@ export const OverviewPage: React.FC = () => {
               <code>src/features/</code>
             </p>
             <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              19 autonomous business domain folders (HRMS, CRM, Finance, ERP, etc.) owned in parallel by 3 frontend teams.
+              Autonomous business domain folders (ERP for Team A, CRM for Team B, HRMS for Team C, plus supporting domains).
             </p>
           </Card>
 
@@ -60,76 +147,8 @@ export const OverviewPage: React.FC = () => {
               <code>src/shared/</code>
             </p>
             <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              Strictly domain-agnostic UI components (Button, Card, PageHeader), generic utility functions, hooks, and shared types.
+              Strictly domain-agnostic UI primitives (Button, Card, PageHeader, Badge, Input), generic hooks, and utility formatters.
             </p>
-          </Card>
-        </div>
-      </div>
-
-      {/* Three-Team Parallel Velocity Model */}
-      <div style={{ marginBottom: '28px' }}>
-        <h2 style={{ fontSize: '18px', fontWeight: 600, fontFamily: 'var(--font-display)', marginBottom: '14px' }}>
-          3-Team Parallel Development Model
-        </h2>
-        <div className="grid-cols-3">
-          <Card
-            title="Team A"
-            accent="team-a"
-            badge={<Badge variant="team-a">Platform & Revenue</Badge>}
-            action={<Link to="/features/platform-admin"><Button variant="team-a" size="sm">Explore Demo</Button></Link>}
-          >
-            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '10px' }}>
-              Example Domain Ownership:
-            </p>
-            <ul style={{ paddingLeft: '18px', fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '14px' }}>
-              <li><code>platform-admin</code></li>
-              <li><code>subscription</code></li>
-              <li><code>revenue</code></li>
-              <li><code>reporting</code></li>
-            </ul>
-            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-              Active Branch: <code>feature/team-a-platform-admin-demo</code>
-            </div>
-          </Card>
-
-          <Card
-            title="Team B"
-            accent="team-b"
-            badge={<Badge variant="team-b">Workforce & Collab</Badge>}
-            action={<Link to="/features/hrms"><Button variant="team-b" size="sm">Explore Demo</Button></Link>}
-          >
-            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '10px' }}>
-              Example Domain Ownership:
-            </p>
-            <ul style={{ paddingLeft: '18px', fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '14px' }}>
-              <li><code>hrms</code></li>
-              <li><code>crm</code></li>
-              <li><code>workflow</code></li>
-              <li><code>notifications</code>, <code>calendar</code></li>
-            </ul>
-            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-              Active Branch: <code>feature/team-b-hrms-demo</code>
-            </div>
-          </Card>
-
-          <Card
-            title="Team C"
-            accent="team-c"
-            badge={<Badge variant="team-c">Operations & Systems</Badge>}
-            action={<Link to="/features/finance"><Button variant="team-c" size="sm">Explore Demo</Button></Link>}
-          >
-            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '10px' }}>
-              Example Domain Ownership:
-            </p>
-            <ul style={{ paddingLeft: '18px', fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '14px' }}>
-              <li><code>finance</code> & <code>erp</code></li>
-              <li><code>dms</code> & <code>integrations</code></li>
-              <li><code>search</code> & <code>monitoring</code></li>
-              <li><code>security</code>, <code>developer</code>, <code>portals</code>, <code>ai</code></li>
-            </ul>
-            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-              Active Branch: <code>feature/team-c-finance-demo</code>
-            </div>
           </Card>
         </div>
       </div>
@@ -159,7 +178,7 @@ export const OverviewPage: React.FC = () => {
               <li><code>app → shared</code> (Orchestration consumes shared UI)</li>
               <li><code>app → features</code> (Orchestration routes domain pages)</li>
               <li><code>features → core</code> (Domains consume tenant/auth context)</li>
-              <li><code>features → shared</code> (Domains consume shared buttons, cards)</li>
+              <li><code>features → shared</code> (Domains consume shared buttons, inputs)</li>
             </ul>
           </div>
 
@@ -171,7 +190,7 @@ export const OverviewPage: React.FC = () => {
               <li><code>core → features</code> (Infrastructure cannot know domains)</li>
               <li><code>shared → features</code> (Shared cannot know domains)</li>
               <li><code>features → app</code> (Domains cannot depend on orchestration)</li>
-              <li><code>features/a → features/b</code> (No deep cross-feature imports)</li>
+              <li><code>erp ──✕──&gt; crm / hrms</code> (No cross-feature imports between teams)</li>
               <li>Business domain logic placed inside <code>shared</code> or <code>core</code></li>
             </ul>
           </div>

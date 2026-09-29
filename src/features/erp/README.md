@@ -1,30 +1,29 @@
-# Feature Domain: ERP
+# Feature Domain: ERP (Enterprise Resource Planning)
 
 **Domain Boundary:** `src/features/erp/`  
-**Demonstration Team Ownership:** Team C (Operations & Systems)  
-*(Note: Team assignments are demonstration ownership and can be adjusted by the project lead. The architectural boundary rule is the permanent source of truth.)*
+**Official Team Ownership:** **Team A**  
+**Role:** Enterprise Resource Planning domain foundation for One Enterprise Cloud.
 
-## Domain Purpose
-Enterprise Resource Planning: supply chain, procurement, inventory management, vendor logistics, and asset tracking.
-
-## When Product Development Begins, This Folder Will Contain:
+## Directory Structure
 ```
 src/features/erp/
-├── components/     # Domain-specific UI components (not used outside this domain)
-├── hooks/          # Domain-specific React hooks (e.g. state, domain forms)
-├── api/            # Domain service queries/mutations consuming @core/api infrastructure
+├── pages/          # Routed views for ERP (e.g. ErpHomePage.tsx)
+├── components/     # ERP domain-specific UI components
+├── hooks/          # ERP domain-specific React hooks
+├── services/       # Domain service adapters consuming @core/api infrastructure
 ├── types/          # Domain TypeScript models, contracts, and view interfaces
-├── pages/          # Routed views for this domain
-└── tests/          # Domain-specific unit and integration tests
+├── constants/      # Feature-level constants
+├── utils/          # Domain helper functions
+├── routes/         # Internal route mappings
+├── index.ts        # Public entry point
+└── README.md
 ```
 
 ## Architectural Dependency Rules
 - **ALLOWED:**
-  - Import technical infrastructure from `@core` (e.g. auth context, tenant info, storage)
-  - Import domain-agnostic UI and helpers from `@shared` (e.g. Button, Card, formatters)
+  - Import technical infrastructure from `@core` (auth, tenant, permissions, API contracts).
+  - Import domain-agnostic UI and helpers from `@shared` (Button, Card, Input, formatters).
 - **STRICTLY PROHIBITED:**
-  - Importing from `src/app/` (features must never depend on application orchestration)
-  - Deep cross-feature imports into other `src/features/*` folders
-  - Injecting domain logic into `@shared` or `@core`
-  - Directly accessing databases or making arbitrary unauthorized network calls
-  - Bypassing core API transport infrastructure
+  - Direct imports into `src/features/crm/` or `src/features/hrms/` (cross-feature coupling is blocked).
+  - Importing from `src/app/` (features cannot depend on application orchestration).
+  - Calling live backend APIs or inventing mock backend servers.

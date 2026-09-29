@@ -1,5 +1,6 @@
 import React from 'react';
-import { demoSession } from '@core/auth';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@core/auth';
 import { ForbiddenPage } from '@app/error-pages/ForbiddenPage';
 
 interface AuthGuardProps {
@@ -8,11 +9,15 @@ interface AuthGuardProps {
 }
 
 export const AuthGuard: React.FC<AuthGuardProps> = ({ children, requiredRole }) => {
-  if (!demoSession.isAuthenticated) {
-    return <ForbiddenPage />;
+  const { isAuthenticated, user } = useAuth();
+  const location = useLocation();
+
+  if (!isAuthenticated) {
+    // Redirect to /login while saving original intended path
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (requiredRole && !demoSession.roles.includes(requiredRole) && !demoSession.roles.includes('EnterpriseAdmin')) {
+  if (requiredRole && user && !user.roles.includes(requiredRole) && !user.roles.includes('EnterpriseAdmin')) {
     return <ForbiddenPage />;
   }
 

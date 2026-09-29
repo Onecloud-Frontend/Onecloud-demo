@@ -6,21 +6,25 @@ interface DomainItem {
   team: 'Team A' | 'Team B' | 'Team C';
   cluster: string;
   scopeDescription: string;
+  isPrimary?: boolean;
 }
 
 const allDomains: DomainItem[] = [
+  // Primary Three Team Domains
+  { name: 'erp', team: 'Team A', cluster: 'Operations & Logistics (Primary)', scopeDescription: 'Primary Team A domain: supply chain, procurement orders, inventory counts, enterprise resource planning.', isPrimary: true },
+  { name: 'crm', team: 'Team B', cluster: 'Customer Operations (Primary)', scopeDescription: 'Primary Team B domain: opportunity pipelines, accounts, leads, deal stages, customer relationship management.', isPrimary: true },
+  { name: 'hrms', team: 'Team C', cluster: 'Workforce Management (Primary)', scopeDescription: 'Primary Team C domain: employee directory, attendance, leaves, organization chart, human resource management.', isPrimary: true },
+
+  // Supporting / Other Domains
   { name: 'platform-admin', team: 'Team A', cluster: 'Platform & Governance', scopeDescription: 'Tenant lifecycle, global admin settings, license assignment.' },
   { name: 'subscription', team: 'Team A', cluster: 'Commercial Management', scopeDescription: 'Tier management, add-on feature entitlements, seat caps.' },
   { name: 'revenue', team: 'Team A', cluster: 'Commercial Management', scopeDescription: 'Billing lifecycle, automated invoices, payment gateway sync.' },
   { name: 'reporting', team: 'Team A', cluster: 'Business Intelligence', scopeDescription: 'Cross-cloud executive reporting, scheduled exports, KPI graphs.' },
 
-  { name: 'hrms', team: 'Team B', cluster: 'Workforce Management', scopeDescription: 'Employee directory, attendance, leaves, onboarding checklists.' },
-  { name: 'crm', team: 'Team B', cluster: 'Customer Operations', scopeDescription: 'Deals pipeline, lead tracking, customer account contacts.' },
   { name: 'workflow', team: 'Team B', cluster: 'Business Automation', scopeDescription: 'Multi-step approval matrices, workflow triggers, task routing.' },
   { name: 'notifications', team: 'Team B', cluster: 'Communications', scopeDescription: 'In-app notification tray, message broadcast, preferences.' },
-  { name: 'calendar', team: 'Team B', cluster: 'Workforce Management', scopeDescription: 'Enterprise shared events, resource and room reservations.' },
+  { name: 'calendar', team: 'Team B', cluster: 'Workforce Scheduling', scopeDescription: 'Enterprise shared events, resource and room reservations.' },
 
-  { name: 'erp', team: 'Team C', cluster: 'Operations & Logistics', scopeDescription: 'Supply chain, inventory tracking, procurement orders.' },
   { name: 'finance', team: 'Team C', cluster: 'Financial Systems', scopeDescription: 'General ledger, AP/AR, multi-currency valuation, tax.' },
   { name: 'dms', team: 'Team C', cluster: 'Document Management', scopeDescription: 'Enterprise document vault, versioning, access audits.' },
   { name: 'integrations', team: 'Team C', cluster: 'Ecosystem & APIs', scopeDescription: 'Webhooks, third-party connectors, ERP bridge relays.' },
@@ -44,8 +48,8 @@ export const TeamOwnershipPage: React.FC = () => {
       <PageHeader
         breadcrumb="Organizational Governance"
         title="Three-Team Ownership Matrix"
-        description="Clear domain allocation across 19 business domains. Fosters parallel velocity while eliminating ownership ambiguity."
-        badge={<Badge variant="core">19 Domains</Badge>}
+        description="Official domain allocation across the three frontend teams. Highlights Team A (ERP), Team B (CRM), and Team C (HRMS) as primary focus areas."
+        badge={<Badge variant="core">3 Teams • 19 Domains</Badge>}
         actions={
           <div style={{ display: 'flex', gap: '8px' }}>
             <Button
@@ -53,51 +57,59 @@ export const TeamOwnershipPage: React.FC = () => {
               size="sm"
               onClick={() => setSelectedTeam('ALL')}
             >
-              All (19)
+              All Domains (19)
             </Button>
             <Button
               variant={selectedTeam === 'Team A' ? 'team-a' : 'outline'}
               size="sm"
               onClick={() => setSelectedTeam('Team A')}
             >
-              Team A (4)
+              Team A (ERP Focus)
             </Button>
             <Button
               variant={selectedTeam === 'Team B' ? 'team-b' : 'outline'}
               size="sm"
               onClick={() => setSelectedTeam('Team B')}
             >
-              Team B (5)
+              Team B (CRM Focus)
             </Button>
             <Button
               variant={selectedTeam === 'Team C' ? 'team-c' : 'outline'}
               size="sm"
               onClick={() => setSelectedTeam('Team C')}
             >
-              Team C (10)
+              Team C (HRMS Focus)
             </Button>
           </div>
         }
       />
 
-      {/* Critical Disclaimer Card */}
+      {/* Primary Teams Banner */}
       <div
         style={{
-          padding: '16px 20px',
+          padding: '18px 22px',
           backgroundColor: 'rgba(99, 102, 241, 0.08)',
           border: '1px solid rgba(99, 102, 241, 0.25)',
-          borderRadius: 'var(--radius-md)',
+          borderRadius: 'var(--radius-lg)',
           marginBottom: '24px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
         }}
       >
-        <span style={{ fontSize: '20px' }}>ℹ️</span>
-        <div style={{ fontSize: '13.5px', color: 'var(--text-secondary)' }}>
-          <strong style={{ color: 'var(--text-primary)' }}>Demonstration Ownership Notice: </strong>
-          Team allocations shown here are illustrative models for 3-team parallel development and can be adjusted
-          by the project lead as business needs evolve. The architectural domain boundaries remain permanent regardless of team assignment.
+        <div style={{ fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)', marginBottom: '6px' }}>
+          Official Three-Team Domain Allocation:
+        </div>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontSize: '13px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Badge variant="team-a">Team A</Badge>
+            <span><strong>ERP</strong> (<code>src/features/erp/</code>)</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Badge variant="team-b">Team B</Badge>
+            <span><strong>CRM</strong> (<code>src/features/crm/</code>)</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Badge variant="team-c">Team C</Badge>
+            <span><strong>HRMS</strong> (<code>src/features/hrms/</code>)</span>
+          </div>
         </div>
       </div>
 
@@ -112,8 +124,8 @@ export const TeamOwnershipPage: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '16px 20px',
-                backgroundColor: 'var(--bg-card)',
-                border: '1px solid var(--border-subtle)',
+                backgroundColor: domain.isPrimary ? 'var(--bg-elevated)' : 'var(--bg-card)',
+                border: domain.isPrimary ? `1px solid var(--${badgeVariant}-border)` : '1px solid var(--border-subtle)',
                 borderRadius: 'var(--radius-md)',
                 gap: '16px',
               }}
@@ -123,6 +135,9 @@ export const TeamOwnershipPage: React.FC = () => {
                   <code style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)' }}>
                     src/features/{domain.name}
                   </code>
+                  {domain.isPrimary && (
+                    <Badge variant="success" size="sm">Primary Focus</Badge>
+                  )}
                 </div>
                 <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
                   {domain.cluster}
