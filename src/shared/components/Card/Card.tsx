@@ -7,7 +7,7 @@ export interface CardProps {
   badge?: React.ReactNode;
   action?: React.ReactNode;
   footer?: React.ReactNode;
-  accent?: 'none' | 'team-a' | 'team-b' | 'team-c' | 'brand';
+  accent?: 'none' | 'team-a' | 'team-b' | 'team-c' | 'team-d' | 'brand';
   style?: React.CSSProperties;
   className?: string;
 }
@@ -29,6 +29,7 @@ export const Card: React.FC<CardProps> = ({
     'team-a': 'var(--team-a-border)',
     'team-b': 'var(--team-b-border)',
     'team-c': 'var(--team-c-border)',
+    'team-d': 'rgba(16, 185, 129, 0.4)',
   };
 
   const cardStyle: React.CSSProperties = {

@@ -2,6 +2,7 @@ import { ApiResponseEnvelope } from '@core/api/types';
 import { erpMockHandlers } from '../erp';
 import { crmMockHandlers } from '../crm';
 import { hrmsMockHandlers } from '../hrms';
+import { financeMockHandlers } from '../finance';
 
 export async function routeMockRequest<T>(
   method: string,
@@ -27,6 +28,14 @@ export async function routeMockRequest<T>(
   if (normalizedPath.startsWith('hrms')) {
     if (normalizedPath.includes('workspace-status') || normalizedPath === 'hrms') {
       const res = await hrmsMockHandlers.getWorkspaceStatus();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+  }
+
+  
+  if (normalizedPath.startsWith('finance')) {
+    if (normalizedPath.includes('workspace-status') || normalizedPath === 'finance') {
+      const res = await financeMockHandlers.getWorkspaceStatus();
       return res as unknown as ApiResponseEnvelope<T>;
     }
   }

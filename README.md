@@ -1,213 +1,97 @@
-# One Enterprise Cloud — Frontend Architecture & 3-Team Base Setup
+# One Enterprise Cloud — Frontend
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.2-646cff.svg)](https://vitejs.dev/)
-[![Architecture](https://img.shields.io/badge/Architecture-Official%20OEC-success.svg)](#2-architecture)
+[![Architecture](https://img.shields.io/badge/Architecture-Unified%20Enterprise%20SPA-success.svg)](#architecture)
 
-This repository is the official demonstration of the **One Enterprise Cloud Frontend Architecture** and our **3-Team Git Collaboration Workflow**.
-
-The base application setup provides the common application shell and clean feature foundations for three teams:
-- **Team A → ERP** (`src/features/erp/`)
-- **Team B → CRM** (`src/features/crm/`)
-- **Team C → HRMS** (`src/features/hrms/`)
+Official frontend application for **One Enterprise Cloud**, uniting four enterprise business domains into a single, cohesive, modern Single Page Application (SPA).
 
 ---
 
-## Table of Contents
-1. [Project Purpose](#1-project-purpose)
-2. [Architecture](#2-architecture)
-3. [Folder Structure](#3-folder-structure)
-4. [Three-Team Model](#4-three-team-model)
-5. [Common Application Shell & Login](#5-common-application-shell--login)
-6. [Git Workflow & Branching](#6-git-workflow--branching)
-7. [Team Ownership Matrix](#7-team-ownership-matrix)
-8. [Architectural Dependency Rules](#8-architectural-dependency-rules)
-9. [How to Run Locally](#9-how-to-run-locally)
-10. [What This Demo Intentionally Does NOT Contain](#10-what-this-demo-intentionally-does-not-contain)
+## Technology Stack
+
+- **Framework:** React 19 (Hooks, Concurrent Mode)
+- **Language:** TypeScript 5.8 (Strict Mode, 205 Canonical Business Types)
+- **Bundler & Dev Server:** Vite 6.2 (Lightning-fast HMR and optimized production bundling)
+- **Styling:** Vanilla CSS with Design System Tokens (no heavy CSS runtime overhead)
+- **Architecture:** Layered, modular, domain-driven enterprise architecture
 
 ---
 
-## 1. Project Purpose
+## Engineering Teams & Developer Allocation
 
-The purpose of this base setup is to establish the common application shell and clean feature foundations before domain business functionality is developed.
+The repository is developed concurrently by **24 frontend developers** across **4 business operations teams**:
 
-Key demonstration aspects:
-- **Official frontend architecture** and directory boundaries.
-- **Domain-based feature separation** across ERP, CRM, HRMS, and supporting domains.
-- **3-team parallel development** without merge conflicts or ownership confusion.
-- **Git feature-branch workflow** and pull request review gates.
-- **dev/main branch integration strategy**.
-- **Strict architectural dependency rules** (allowed vs prohibited imports).
-- **Clear team ownership boundaries**.
-
----
-
-## 2. Architecture
-
-The frontend is a **single, unified enterprise web application** built with React, TypeScript, and Vite.
-Backend microservices do NOT require separate repositories or micro-frontends.
-
-The architecture is structured across four primary layers:
-1. **`app/` — Application Orchestration:** Top-level bootstrap, application config, routes, layout assembly (Header, Sidebar, Footer), guards, and error boundaries.
-2. **`core/` — Technical Infrastructure:** Shared cross-cutting technical concerns (Auth session, Tenant context, Permissions RBAC, API client contracts, Storage, Telemetry). Pure technical infrastructure — never contains business domain logic.
-3. **`features/` — Business Domains:** 19 isolated business domain folders:
-   - **Team A:** `erp` (primary), `subscription`, `revenue`, `reporting`, `platform-admin`
-   - **Team B:** `crm` (primary), `workflow`, `notifications`, `calendar`
-   - **Team C:** `hrms` (primary), `finance`, `dms`, `integrations`, `search`, `monitoring`, `security`, `developer`, `portals`, `ai`
-4. **`shared/` — Reusable Domain-Agnostic Assets:** Design system primitives (Button, Card, PageHeader, Badge, Input), formatting helpers, generic hooks, and utility types. Completely agnostic of any business domain.
+| Team | Domain | Active Developers | Feature Directory | Primary Responsibilities |
+| :--- | :--- | :--- | :--- | :--- |
+| **Team 1** | **ERP** | **7** (`ERP-DEV-01` to `ERP-DEV-07`) | `src/features/erp/` | Procurement, Vendor Relations, Inventory, Warehouse, Sales Fulfillment & Returns |
+| **Team 2** | **CRM** | **7** (`CRM-DEV-01` to `CRM-DEV-07`) | `src/features/crm/` | Leads, Opportunities & Forecasting, Customer 360, Quotations, Support Portal |
+| **Team 3** | **HRMS** | **7** (`HRMS-DEV-01` to `HRMS-DEV-07`) | `src/features/hrms/` | Employee Master, Attendance & Shifts, Leave, Payroll, Recruitment, Assets |
+| **Team 4** | **Finance** | **3** (`FIN-DEV-01` to `FIN-DEV-03`) | `src/features/finance/` | General Ledger & Chart of Accounts, Invoices & AP/AR, Banking, Expenses, Tax |
+| **TOTAL** | **Enterprise** | **24 Developers** | — | **Single Unified Enterprise Application** |
 
 ---
 
-## 3. Folder Structure
+## High-Level Architecture
+
+The frontend codebase enforces clean separation of concerns across four primary architectural layers:
 
 ```
 src/
-├── app/
-│   ├── bootstrap/
-│   │   └── index.tsx          # Application root mount
-│   ├── config/                # Environment, feature flags, application metadata
-│   ├── auth-pages/            # Clean enterprise LoginPage.tsx
-│   ├── error-pages/           # 404 Not Found, 403 Forbidden views
-│   ├── layouts/               # Header, Sidebar, Footer, AppLayout shell
-│   ├── pages/                 # OverviewPage, TeamOwnershipPage, GitWorkflowPage, etc.
-│   ├── providers/             # React providers composition (Router + AuthProvider)
-│   ├── router/                # App routing table (routes.tsx)
-│   └── guards/                # Route authorization guards (AuthGuard.tsx)
-│
-├── core/
-│   ├── api/                   # HTTP transport client contracts & interceptors
-│   ├── auth/                  # User identity session, useAuth hook, local demo flow
-│   ├── errors/                # Normalized error classes
-│   ├── permissions/           # RBAC & PBAC evaluation
-│   ├── tenant/                # Multi-tenant context and partitioning
-│   ├── storage/               # Namespaced storage wrappers
-│   ├── telemetry/             # Tracing and event dispatcher
-│   └── security/              # Input sanitization and CSP compliance
-│
-├── features/                  # Business Domains
-│   ├── erp/                   # Team A Workspace (pages, components, hooks, services, types, routes)
-│   ├── crm/                   # Team B Workspace (pages, components, hooks, services, types, routes)
-│   ├── hrms/                  # Team C Workspace (pages, components, hooks, services, types, routes)
-│   └── supporting-domains...
-│
-├── shared/
-│   ├── components/            # Button, Card, PageHeader, Badge, Input
-│   ├── hooks/                 # useDebounce, etc.
-│   ├── utils/                 # formatCurrency, formatDate, etc.
-│   ├── types/                 # EntityId, Nullable, SelectOption
-│   └── constants/             # App constants
-│
-├── styles/                    # tokens.css, colors.ts, globals.css
-├── assets/                    # Static images, SVGs
-└── tests/                     # e2e, integration, fixtures
+├── app/        # Global layout shell (Header, Sidebar), routing table (routes.tsx), global providers
+├── core/       # Technical infrastructure: API client, authentication, RBAC, tenant context
+├── features/   # Business capability domains (ERP, CRM, HRMS, Finance)
+└── shared/     # Domain-agnostic design system components, hooks, formatters, and shared types
 ```
 
----
+### Core Architectural Principles
 
-## 4. Three-Team Model
-
-Development ownership across the three primary business domains:
-- **Team A → ERP** (`src/features/erp/`)  
-  Branch: `feature/team-a-erp-demo`
-- **Team B → CRM** (`src/features/crm/`)  
-  Branch: `feature/team-b-crm-demo`
-- **Team C → HRMS** (`src/features/hrms/`)  
-  Branch: `feature/team-c-hrms-demo`
+1. **Unified Single Page Application:** The frontend is **one application**, not fragmented micro-frontends or separate repositories. All domains share navigation, authentication, and design language.
+2. **Strict Feature Boundaries:** Business domains live inside isolated folders under `src/features/<domain>/`. Developers work within their assigned feature folder without editing other domains.
+3. **Centralized Canonical Type System:** A frozen set of **205 canonical TypeScript business types** governs all enterprise data contracts. Developers must import and reuse these canonical types rather than defining ad-hoc interfaces.
+4. **In-Memory Mock Layer:** During early development, an in-memory mock adapter (`src/mock/`) simulates realistic latency and data responses, allowing UI development to proceed independently without waiting for backend deployment.
+5. **Seamless Backend Integration:** Real backend microservices can be connected later via the centralized `apiClient` without restructuring feature components or routes.
 
 ---
 
-## 5. Common Application Shell & Login
+## Developer Documentation System
 
-- **Login Page (`src/app/auth-pages/LoginPage.tsx`):**  
-  Enterprise login with email/password fields, show/hide password toggle, remember me, validation, loading state, error banner, and clear demo auth notification.
-- **Header (`src/app/layouts/Header.tsx`):**  
-  Top enterprise bar with brand logo, dynamic domain indicator ("ERP Team Workspace", "CRM Team Workspace", "HRMS Team Workspace"), universal search, notifications placeholder, active tenant badge, and user profile menu with sign-out.
-- **Sidebar (`src/app/layouts/Sidebar.tsx`):**  
-  Collapsible navigation displaying Dashboard, the 3 Primary Business Modules (ERP, CRM, HRMS with team badges), and Architecture Standards links.
-- **Footer (`src/app/layouts/Footer.tsx`):**  
-  Application copyright, version, demo environment indicator, and support links.
+Review these authoritative guides before starting implementation:
 
----
+- **[Developer Quickstart (Start Here)](./docs/development/DEVELOPER_START_HERE.md)** — 5-minute onboarding guide.
+- **[Common Developer Guide](./docs/development/DEVELOPER_GUIDE.md)** — Architectural standards, forms, tables, code quality, and PR checklists.
+- **[Master Developer Assignments Matrix](./docs/development/DEVELOPER_ASSIGNMENTS.md)** — Authoritative 24-developer assignment table.
+- **[Canonical Type Contract Catalog](./docs/development/TYPE_CONTRACT_CATALOG.md)** — Complete catalog of all 205 canonical business types.
 
-## 6. Git Workflow & Branching
+### Team-Specific Guides
+- **[Team 1 — ERP Team Guide](./docs/development/teams/ERP_TEAM_GUIDE.md)**
+- **[Team 2 — CRM Team Guide](./docs/development/teams/CRM_TEAM_GUIDE.md)**
+- **[Team 3 — HRMS Team Guide](./docs/development/teams/HRMS_TEAM_GUIDE.md)**
+- **[Team 4 — Finance Team Guide](./docs/development/teams/FINANCE_TEAM_GUIDE.md)**
 
-```
-main (Production / Stable Branch)
-  ▲
-  │ [Pull Request: Release Cut & Integration Verification]
-dev (Development Baseline / Integration Branch)
-  ▲
-  ├── [Pull Request] ── feature/team-a-erp-demo (Team A)
-  ├── [Pull Request] ── feature/team-b-crm-demo (Team B)
-  └── [Pull Request] ── feature/team-c-hrms-demo (Team C)
-```
-
-### Branch Naming Convention:
-- Team A: `feature/team-a-erp-<task>` (e.g. `feature/team-a-erp-dashboard`)
-- Team B: `feature/team-b-crm-<task>` (e.g. `feature/team-b-crm-customers`)
-- Team C: `feature/team-c-hrms-<task>` (e.g. `feature/team-c-hrms-employees`)
+### Technical & Governance Documentation
+- **[Official Frontend Architecture](./docs/architecture/FRONTEND_ARCHITECTURE.md)**
+- **[Architectural Dependency Rules](./docs/architecture/DEPENDENCY_RULES.md)**
+- **[Git Workflow & Branching Standards](./docs/git/GIT_WORKFLOW.md)**
+- **[Team Ownership Matrix](./docs/teams/TEAM_OWNERSHIP.md)**
 
 ---
 
-## 7. Team Ownership Matrix
+## How to Run Locally
 
-Each team owns its assigned domain folder:
-- **ERP Team:** Works inside `src/features/erp/`.
-- **CRM Team:** Works inside `src/features/crm/`.
-- **HRMS Team:** Works inside `src/features/hrms/`.
+```powershell
+# 1. Install dependencies (if not already installed)
+npm.cmd install
 
----
+# 2. Run local development server
+npm.cmd run dev
 
-## 8. Architectural Dependency Rules
+# 3. Typecheck codebase
+npm.cmd run typecheck
 
-```
-Allowed:
-  app      ──> core
-  app      ──> shared
-  app      ──> features
-  features ──> core
-  features ──> shared
-  core     ──> infrastructure only
-  shared   ──> domain-agnostic primitives only
-
-Prohibited:
-  core     ──✕──> features
-  shared   ──✕──> features
-  features ──✕──> app
-  erp      ──✕──> crm / hrms (no cross-feature imports between teams)
-  business logic in shared or core
+# 4. Create production build
+npm.cmd run build
 ```
 
----
-
-## 9. How to Run Locally
-
-```bash
-# 1. Navigate to the project directory
-cd D:\one-enterprise-cloud-team-demo
-
-# 2. Install dependencies (if not already installed)
-npm install
-
-# 3. Start local development server
-npm run dev
-# Server starts at http://localhost:3000
-
-# 4. Run TypeScript typecheck
-npm run typecheck
-
-# 5. Run production build bundle
-npm run build
-```
-
----
-
-## 10. What This Demo Intentionally Does NOT Contain
-
-1. **NO Premature Business Modules:** No fake accounting, leads, or payroll modules.
-2. **NO Real Backend APIs:** No live API URLs, no Axios/Fetch clients making actual network calls.
-3. **NO Fake API Servers:** No mock servers (MSW, Mirage) simulating endpoints.
-4. **NO Database Schemas:** No database connections, ORM models, or direct DB queries.
-5. **NO Personal Git Branches:** Branches represent tasks, not people.
-6. **NO Micro-Frontend Fragmentation:** Built as a clean, cohesive, scalable monorepo.
+The local application server runs at `http://localhost:3000`.

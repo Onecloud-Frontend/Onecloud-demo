@@ -1,29 +1,46 @@
-# Feature Domain: HRMS (Human Resource Management System)
+# HRMS Domain (`src/features/hrms/`)
 
-**Domain Boundary:** `src/features/hrms/`  
-**Official Team Ownership:** **Team C**  
-**Role:** Human Resource Management System domain foundation for One Enterprise Cloud.
+## 1. Domain Purpose
+Human Resource Management System (HRMS) governs employee master profiles, attendance and shift scheduling, leave policies and approvals, payroll calculation and payslips, talent acquisition (ATS), performance appraisal cycles, and employee self-service (ESS) asset requests.
 
-## Directory Structure
+## 2. Team Ownership & Developer Allocation
+- **Team**: Team 3 (7 Developers)
+- **Developers**:
+  - `HRMS-DEV-01`: Employee Management (`EmployeeManagementPage.tsx` / `/hrms/employees`)
+  - `HRMS-DEV-02`: Attendance (`AttendancePage.tsx` / `/hrms/attendance`)
+  - `HRMS-DEV-03`: Leave Management (`LeaveManagementPage.tsx` / `/hrms/leave`)
+  - `HRMS-DEV-04`: Payroll (`PayrollPage.tsx` / `/hrms/payroll`)
+  - `HRMS-DEV-05`: Recruitment (`RecruitmentPage.tsx` / `/hrms/recruitment`)
+  - `HRMS-DEV-06`: Performance + Learning (`PerformanceLearningPage.tsx` / `/hrms/performance`)
+  - `HRMS-DEV-07`: ESS + Assets (`ESSEmployeeAssetsPage.tsx` / `/hrms/ess-assets`)
+
+## 3. Folder Structure
 ```
 src/features/hrms/
-├── pages/          # Routed views for HRMS (e.g. HrmsHomePage.tsx)
-├── components/     # HRMS domain-specific UI components
-├── hooks/          # HRMS domain-specific React hooks
-├── services/       # Domain service adapters consuming @core/api infrastructure
-├── types/          # Domain TypeScript models, contracts, and view interfaces
-├── constants/      # Feature-level constants
-├── utils/          # Domain helper functions
-├── routes/         # Internal route mappings
-├── index.ts        # Public entry point
-└── README.md
+├── components/   # Domain-specific UI components
+├── constants/    # HRMS constant values and status codes
+├── docs/         # Developer assignment details
+├── hooks/        # HRMS custom React hooks
+├── pages/        # 7 starter pages + domain overview
+├── routes/       # hrmsRoutes.tsx (composed into AppRouter)
+├── services/     # Feature services consuming apiClient
+├── types/        # Domain TypeScript interfaces
+├── utils/        # Domain pure utility functions
+├── README.md     # Domain reference
+└── index.ts      # Public domain boundary export
 ```
 
-## Architectural Dependency Rules
-- **ALLOWED:**
-  - Import technical infrastructure from `@core` (auth, tenant, permissions, API contracts).
-  - Import domain-agnostic UI and helpers from `@shared` (Button, Card, Input, formatters).
-- **STRICTLY PROHIBITED:**
-  - Direct imports into `src/features/erp/` or `src/features/crm/` (cross-feature coupling is blocked).
-  - Importing from `src/app/` (features cannot depend on application orchestration).
-  - Calling live backend APIs or inventing mock backend servers.
+## 4. Developer Responsibilities
+- **Allowed Modifications**:
+  - Create and modify files within `src/features/hrms/`.
+  - Create and maintain mock data and handlers in `src/mock/hrms/`.
+- **Prohibited Modifications**:
+  - Do NOT modify ERP, CRM, or Finance features.
+  - Do NOT modify `src/core/` or `src/shared/` without foundation review.
+  - Do NOT make direct network requests.
+
+## 5. Mock & Backend Workflow
+1. Author domain types in `src/features/hrms/types/`.
+2. Define mock responses in `src/mock/hrms/` wrapped in standard `ApiResponseEnvelope`.
+3. In `services/`, consume `apiClient`.
+4. When backend deploys, toggling `apiConfig.ts` to `'REAL'` connects live endpoints with zero page rewrites.

@@ -9,7 +9,7 @@ A foundational architectural principle of this system is:
 > Backend microservices do NOT require one frontend project per microservice.  
 > Frontend boundaries must follow business domains and user workflows, not backend deployment topologies.
 
-This architecture enables multiple frontend teams (Team A, Team B, Team C) to develop in parallel with zero merge collisions, crystal-clear code ownership, and strict dependency boundaries.
+This architecture enables four parallel engineering teams (Team 1 — ERP, Team 2 — CRM, Team 3 — HRMS, Team 4 — Finance; 24 developers total) to develop in parallel with zero merge collisions, crystal-clear code ownership, and strict dependency boundaries.
 
 ---
 
@@ -45,25 +45,25 @@ src/
 │   └── security/         # Input sanitization and CSP compliance helpers
 │
 ├── features/             # Autonomous business domains (19 domains)
-│   ├── platform-admin/   # Central tenant admin & license management (Team A)
-│   ├── subscription/     # Tiering, quotas, and subscriptions (Team A)
-│   ├── revenue/          # Billing, invoice pipelines, and recognition (Team A)
-│   ├── reporting/        # BI dashboards and executive analytics (Team A)
-│   ├── hrms/             # Workforce, directory, and leave tracking (Team B)
-│   ├── crm/              # Sales pipeline and customer accounts (Team B)
-│   ├── workflow/         # Business process approval matrices (Team B)
-│   ├── notifications/    # In-app alerts and notifications tray (Team B)
-│   ├── calendar/         # Corporate scheduling and shared calendars (Team B)
-│   ├── erp/              # Supply chain, procurement, inventory (Team C)
-│   ├── finance/          # General ledger, AP/AR, multi-currency (Team C)
-│   ├── dms/              # Document vault, metadata indexing (Team C)
-│   ├── integrations/     # Webhooks, partner relays, API gateway (Team C)
-│   ├── search/           # Federated enterprise search index (Team C)
-│   ├── monitoring/       # System health and audit logging (Team C)
-│   ├── security/         # Enterprise compliance, SSO, policies (Team C)
-│   ├── developer/        # API keys, developer portal, test sandbox (Team C)
-│   ├── portals/          # External stakeholder portals (Team C)
-│   └── ai/               # AI co-pilot, document intelligence (Team C)
+│   ├── erp/              # Supply chain, procurement, inventory (Team 1 — ERP, 7 Devs)
+│   ├── crm/              # Sales pipeline, accounts, opportunities (Team 2 — CRM, 7 Devs)
+│   ├── hrms/             # Workforce, attendance, payroll, leave (Team 3 — HRMS, 7 Devs)
+│   ├── finance/          # General ledger, AP/AR, banking, tax (Team 4 — Finance, 3 Devs)
+│   ├── platform-admin/   # Central tenant admin & license management (Future / Platform)
+│   ├── subscription/     # Tiering, quotas, and subscriptions (Future Commercial)
+│   ├── revenue/          # Billing, invoice pipelines, and recognition (Future Commercial)
+│   ├── reporting/        # BI dashboards and executive analytics (Future Intelligence)
+│   ├── workflow/         # Business process approval matrices (Future Automation)
+│   ├── notifications/    # In-app alerts and notifications tray (Future Communications)
+│   ├── calendar/         # Corporate scheduling and shared calendars (Future Scheduling)
+│   ├── dms/              # Document vault, metadata indexing (Future Document Vault)
+│   ├── integrations/     # Webhooks, partner relays, API gateway (Future Ecosystem)
+│   ├── search/           # Federated enterprise search index (Future Discovery)
+│   ├── monitoring/       # System health and audit logging (Future Reliability)
+│   ├── security/         # Enterprise compliance, SSO, policies (Future Compliance)
+│   ├── developer/        # API keys, developer portal, test sandbox (Future Platform SDK)
+│   ├── portals/          # External stakeholder portals (Future Stakeholder)
+│   └── ai/               # AI co-pilot, document intelligence (Future Cognitive)
 │
 ├── shared/               # Domain-agnostic reusable functionality
 │   ├── components/       # Design system primitives (Button, Card, PageHeader, Badge)

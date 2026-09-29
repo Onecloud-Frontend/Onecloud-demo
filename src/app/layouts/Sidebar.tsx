@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  Boxes,
-  Briefcase,
-  Users as UsersIcon,
-  ChevronDown,
-  ChevronRight
-} from 'lucide-react';
+import { LayoutDashboard, Boxes, Briefcase, Users as UsersIcon, ChevronDown, ChevronRight, Landmark } from 'lucide-react';
 import { navigationConfig, NavigationDomain } from '@app/config/navigation';
 
 interface SidebarProps {
@@ -24,6 +17,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
     if (path.startsWith('/erp')) return 'erp';
     if (path.startsWith('/crm')) return 'crm';
     if (path.startsWith('/hrms')) return 'hrms';
+    if (path.startsWith('/finance')) return 'finance';
     return null;
   };
 
@@ -58,6 +52,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
         return <Briefcase size={18} style={{ flexShrink: 0 }} />;
       case 'Users':
         return <UsersIcon size={18} style={{ flexShrink: 0 }} />;
+      case 'Landmark':
+        return <Landmark size={18} style={{ flexShrink: 0 }} />;
       default:
         return <Boxes size={18} style={{ flexShrink: 0 }} />;
     }

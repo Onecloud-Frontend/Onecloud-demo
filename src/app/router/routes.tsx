@@ -9,6 +9,7 @@ import { OverviewPage } from '@app/pages/OverviewPage';
 import { erpRoutes } from '@features/erp';
 import { crmRoutes } from '@features/crm';
 import { hrmsRoutes } from '@features/hrms';
+import { financeRoutes } from '@features/finance';
 
 import { NotFoundPage } from '@app/error-pages/NotFoundPage';
 
@@ -35,6 +36,7 @@ export const AppRouter: React.FC = () => {
         {erpRoutes}
         {crmRoutes}
         {hrmsRoutes}
+        {financeRoutes}
 
         {/* Catch-all 404 */}
         <Route path="*" element={<NotFoundPage />} />

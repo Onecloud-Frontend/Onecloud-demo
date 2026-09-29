@@ -5,7 +5,7 @@
 The One Enterprise Cloud frontend is organized as a **single, unified enterprise web application** built with React 19, TypeScript 5.8, and Vite 6.2.
 
 Key architectural tenets:
-- **Unified Monorepo:** All three engineering teams (Team A, Team B, Team C) work inside the same cohesive frontend application.
+- **Unified Monorepo:** All four engineering teams (Team 1 — ERP, Team 2 — CRM, Team 3 — HRMS, Team 4 — Finance (24 developers)) work inside the same cohesive frontend application.
 - **No Micro-Frontends / No Separate Repositories:** Simplifies shared state, authentication, design system consistency, and build validation.
 - **Pre-Backend Decoupling:** Development proceeds at full velocity against typed contracts and an in-memory mock adapter before backend microservices are deployed.
 - **Strict Domain Boundaries:** Each team owns its assigned domain folder in `src/features/` without cross-domain leakage.
@@ -31,9 +31,9 @@ src/
 │   └── storage/          # Namespace-aware storage wrappers
 │
 ├── features/             # Business Domains
-│   ├── erp/              # Team A Workspace (pages, components, hooks, services, types, routes)
-│   ├── crm/              # Team B Workspace (pages, components, hooks, services, types, routes)
-│   ├── hrms/             # Team C Workspace (pages, components, hooks, services, types, routes)
+│   ├── erp/              # Team 1 (ERP) Workspace (pages, components, hooks, services, types, routes)
+│   ├── crm/              # Team 2 (CRM) Workspace (pages, components, hooks, services, types, routes)
+│   ├── hrms/             # Team 3 (HRMS) Workspace (pages, components, hooks, services, types, routes)
 │   └── supporting-domains
 │
 └── shared/               # Domain-Agnostic Assets

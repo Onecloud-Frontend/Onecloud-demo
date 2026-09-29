@@ -2,8 +2,8 @@
 
 ## 1. Purpose of the Mock Layer
 
-Backend services for ERP, CRM, and HRMS are currently pending deployment.  
-The mock layer allows all three teams to develop real user interfaces, forms, and tables against **stable TypeScript contracts** without blocking on backend delivery.
+Backend microservices for ERP, CRM, HRMS, and Finance are developed in parallel.
+The mock layer allows all four engineering teams to develop real user interfaces, forms, and tables against **stable TypeScript canonical contracts** without blocking on backend delivery.
 
 ---
 
@@ -13,17 +13,21 @@ The mock layer is centralized under `src/mock/`:
 
 ```
 src/mock/
-├── erp/                  # ERP mock data & handlers (Owned by Team A)
+├── erp/                  # ERP mock data & handlers (Team 1 — ERP)
 │   ├── erpMockData.ts
 │   ├── erpMockHandlers.ts
 │   └── index.ts
-├── crm/                  # CRM mock data & handlers (Owned by Team B)
+├── crm/                  # CRM mock data & handlers (Team 2 — CRM)
 │   ├── crmMockData.ts
 │   ├── crmMockHandlers.ts
 │   └── index.ts
-├── hrms/                 # HRMS mock data & handlers (Owned by Team C)
+├── hrms/                 # HRMS mock data & handlers (Team 3 — HRMS)
 │   ├── hrmsMockData.ts
 │   ├── hrmsMockHandlers.ts
+│   └── index.ts
+├── finance/              # Finance mock data & handlers (Team 4 — Finance)
+│   ├── financeMockData.ts
+│   ├── financeMockHandlers.ts
 │   └── index.ts
 ├── handlers/
 │   └── mockRouter.ts     # Dispatches path requests to domain handlers
@@ -38,12 +42,13 @@ src/mock/
 ## 3. Separation of Responsibilities
 
 | Responsibility | Owner | Scope |
-|---|---|---|
+| :--- | :--- | :--- |
 | **Core API Client & Mock Adapter** | Central Foundation Owner | `src/core/api/client/`, `src/mock/mockAdapter.ts`, `src/mock/handlers/mockRouter.ts` |
 | **Common API Infrastructure Types** | Central Foundation Owner | `src/core/api/types/` (envelopes, pagination, error schemas) |
-| **ERP Mock Contracts & Data** | **Team A (ERP)** | `src/mock/erp/`, `src/features/erp/types/` |
-| **CRM Mock Contracts & Data** | **Team B (CRM)** | `src/mock/crm/`, `src/features/crm/types/` |
-| **HRMS Mock Contracts & Data** | **Team C (HRMS)** | `src/mock/hrms/`, `src/features/hrms/types/` |
+| **ERP Mock Contracts & Data** | **Team 1 (ERP)** | `src/mock/erp/`, `src/features/erp/types/` |
+| **CRM Mock Contracts & Data** | **Team 2 (CRM)** | `src/mock/crm/`, `src/features/crm/types/` |
+| **HRMS Mock Contracts & Data** | **Team 3 (HRMS)** | `src/mock/hrms/`, `src/features/hrms/types/` |
+| **Finance Mock Contracts & Data** | **Team 4 (Finance)** | `src/mock/finance/`, `src/features/finance/types/` |
 
 ---
 
@@ -71,8 +76,8 @@ UI Component ──> Feature Service ──> apiClient ──> mockAdapter ─�
 UI Component ──> Feature Service ──> apiClient ──> Real HTTP Client ──> API Gateway
 ```
 
-> **CRITICAL BENEFIT:**  
-> Switching to the real backend requires **ZERO changes to UI components or pages**.  
+> **CRITICAL BENEFIT:**
+> Switching to the real backend requires **ZERO changes to UI components or pages**.
 > Only the underlying client transport configuration is switched!
 
 ---

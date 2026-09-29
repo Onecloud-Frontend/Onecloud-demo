@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'team-a' | 'team-b' | 'team-c' | 'core' | 'shared' | 'app' | 'success' | 'warning' | 'neutral';
+  variant?: 'team-a' | 'team-b' | 'team-c' | 'team-d' | 'core' | 'shared' | 'app' | 'success' | 'warning' | 'neutral';
   size?: 'sm' | 'md';
 }
 
@@ -15,6 +15,7 @@ export const Badge: React.FC<BadgeProps> = ({
     'team-a': { bg: 'var(--team-a-bg)', text: 'var(--team-a-accent)', border: 'var(--team-a-border)' },
     'team-b': { bg: 'var(--team-b-bg)', text: 'var(--team-b-accent)', border: 'var(--team-b-border)' },
     'team-c': { bg: 'var(--team-c-bg)', text: 'var(--team-c-accent)', border: 'var(--team-c-border)' },
+    'team-d': { bg: 'rgba(16, 185, 129, 0.14)', text: '#34d399', border: 'rgba(16, 185, 129, 0.35)' },
     core: { bg: 'rgba(99, 102, 241, 0.14)', text: '#818cf8', border: 'rgba(99, 102, 241, 0.35)' },
     shared: { bg: 'rgba(234, 179, 8, 0.14)', text: '#facc15', border: 'rgba(234, 179, 8, 0.35)' },
     app: { bg: 'rgba(244, 63, 94, 0.14)', text: '#fb7185', border: 'rgba(244, 63, 94, 0.35)' },

@@ -1,25 +1,30 @@
 /**
- * HRMS Feature Domain Types
- * Ownership: Team C
- *
- * IMPORTANT:
- * Do NOT invent business entity fields or assume HRMS modules (Payroll, Employees, Leaves, etc.).
- * All business schemas are marked as TBD until approved requirements and API contracts are provided.
+ * Canonical HRMS Domain Types Entry Point
+ * Ownership: Team HRMS (Team 3)
  */
 
+// Baseline workspace contract - preserved for foundation compatibility
 export interface HrmsWorkspaceStatus {
   domainCode: 'HRMS';
   domainName: 'Human Resource Management System';
   status: 'READY_FOR_DEVELOPMENT';
-  pendingRequirementsNote: 'TBD — Requirement/Backend Contract Required';
+  pendingRequirementsNote: string;
   lastUpdated: string;
 }
 
-/**
- * Generic HRMS entity envelope template for future confirmed modules.
- */
 export interface HrmsBaseRecord {
   id: string;
   createdAt: string;
   updatedAt: string;
 }
+
+// Canonical Business Entity Exports
+export * from './department';
+export * from './employee';
+export * from './attendance';
+export * from './leave';
+export * from './payroll';
+export * from './recruitment';
+export * from './performance';
+export * from './learning';
+export * from './asset';

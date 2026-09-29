@@ -6,3 +6,4 @@ export * from './Input';
 export * from './LoadingState';
 export * from './EmptyState';
 export * from './ErrorState';
+export * from './DeveloperStarterPage';

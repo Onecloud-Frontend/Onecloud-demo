@@ -1,7 +1,7 @@
 # Feature Domain: DEVELOPER
 
 **Domain Boundary:** `src/features/developer/`  
-**Demonstration Team Ownership:** Team C (Operations & Systems)  
+**Status:** Unassigned (Future Capability / Platform Architecture)
 *(Note: Team assignments are demonstration ownership and can be adjusted by the project lead. The architectural boundary rule is the permanent source of truth.)*
 
 ## Domain Purpose
