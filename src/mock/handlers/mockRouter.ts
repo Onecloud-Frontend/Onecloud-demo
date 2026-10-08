@@ -30,6 +30,18 @@ export async function routeMockRequest<T>(
       const res = await hrmsMockHandlers.getWorkspaceStatus();
       return res as unknown as ApiResponseEnvelope<T>;
     }
+    if (normalizedPath.includes('leave/types')) {
+      const res = await hrmsMockHandlers.getLeaveTypes();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+    if (normalizedPath.includes('leave/balances')) {
+      const res = await hrmsMockHandlers.getLeaveBalances();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+    if (normalizedPath.includes('leave/requests')) {
+      const res = await hrmsMockHandlers.getLeaveRequests();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
   }
 
   
