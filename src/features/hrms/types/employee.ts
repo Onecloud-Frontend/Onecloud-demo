@@ -43,6 +43,12 @@ export interface Employee {
   emergencyContact: EmergencyContact;
   salaryStructureId: string | null;
   baseSalary: number;
+  name?: string;
+  department?: string;
+  reportingManager?: string;
+  annualCtc?: number;
+  monthlyCtc?: number;
+  skills?: string[];
   panNumber?: string;
   uanNumber?: string;
   createdAt: string;
