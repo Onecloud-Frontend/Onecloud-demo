@@ -6,5 +6,6 @@ export * from './pages/RecruitmentPage';
 export * from './pages/PerformanceLearningPage';
 export * from './pages/ESSEmployeeAssetsPage';
 export * from './services/hrmsService';
+export * from './services/essAssetsService';
 export * from './routes';
 export * from './types';
