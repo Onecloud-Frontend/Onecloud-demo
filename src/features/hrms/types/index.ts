@@ -28,3 +28,4 @@ export * from './recruitment';
 export * from './performance';
 export * from './learning';
 export * from './asset';
+export * from './essAssets';
