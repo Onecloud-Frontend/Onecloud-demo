@@ -30,7 +30,24 @@ export async function routeMockRequest<T>(
       const res = await hrmsMockHandlers.getWorkspaceStatus();
       return res as unknown as ApiResponseEnvelope<T>;
     }
+    if (normalizedPath.includes('attendance')) {
+      const res = await hrmsMockHandlers.getAttendanceRecords();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+    if (normalizedPath.includes('shift')) {
+      const res = await hrmsMockHandlers.getShifts();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+    if (normalizedPath.includes('overtime')) {
+      const res = await hrmsMockHandlers.getOvertimeRecords();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+    if (normalizedPath.includes('correction')) {
+      const res = await hrmsMockHandlers.getCorrections();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
   }
+
 
   
   if (normalizedPath.startsWith('finance')) {
