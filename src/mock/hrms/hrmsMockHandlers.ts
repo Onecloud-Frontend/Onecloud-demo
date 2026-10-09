@@ -46,6 +46,7 @@ import {
   mockAssessments,
 } from './performanceMockData';
 import { delay, createMockEnvelope } from '../data/commonMockData';
+import { attendanceMockHandlers } from './attendanceMockHandlers';
 import { leaveMockHandlers } from './leaveMockHandlers';
 
 // Mutable in-memory state initialized from mock data
@@ -70,6 +71,8 @@ const coursesState: Course[] = [...mockCourses];
 const learningPlansState: LearningPlan[] = [...mockLearningPlans];
 const assessmentsState: Assessment[] = [...mockAssessments];
 
+const { getAttendanceRecords: _unusedAttendance, ...otherAttendanceHandlers } = attendanceMockHandlers;
+
 export const hrmsMockHandlers = {
   /* =======================================================
      WORKSPACE STATUS (Preserved Baseline)
@@ -80,6 +83,7 @@ export const hrmsMockHandlers = {
   },
 
   ...leaveMockHandlers,
+  ...otherAttendanceHandlers,
 
   async getEmployees(): Promise<ApiResponseEnvelope<Employee[]>> {
     await delay(80);

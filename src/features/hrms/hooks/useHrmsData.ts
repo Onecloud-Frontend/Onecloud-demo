@@ -22,10 +22,12 @@ import {
   mockPerformanceDepartments,
 } from '@mock/hrms/performanceMockData';
 import { performanceService } from '../services/performanceService';
+import { useAttendanceData } from './useAttendanceData';
 import { useLeaveData } from './useLeaveData';
 
 export function useHrmsData() {
-  const leaveData = useLeaveData();
+  const attendance = useAttendanceData();
+  const leave = useLeaveData();
 
   const [goals, setGoals] = useState<PerformanceGoal[]>([...mockPerformanceGoals]);
   const [kpis] = useState<KPI[]>([...mockKPIs]);
@@ -92,7 +94,8 @@ export function useHrmsData() {
   );
 
   return {
-    ...leaveData,
+    ...attendance,
+    ...leave,
     goals,
     kpis,
     reviews,
@@ -109,4 +112,6 @@ export function useHrmsData() {
   };
 }
 
+export { useAttendanceData } from './useAttendanceData';
+export { useLeaveData } from './useLeaveData';
 export const usePerformanceData = useHrmsData;
