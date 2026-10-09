@@ -30,6 +30,8 @@ import {
 } from './hrmsMockData';
 import { delay, createMockEnvelope } from '../data/commonMockData';
 import { attendanceMockHandlers } from './attendanceMockHandlers';
+import { leaveMockHandlers } from './leaveMockHandlers';
+
 
 // Mutable in-memory state initialized from mock data
 const state = {
@@ -51,6 +53,8 @@ export const hrmsMockHandlers = {
     await delay(100);
     return createMockEnvelope(mockHrmsWorkspaceStatus, 'HRMS workspace baseline loaded from mock adapter');
   },
+
+  ...leaveMockHandlers,
 
   async getEmployees(): Promise<ApiResponseEnvelope<Employee[]>> {
     await delay(80);
@@ -230,7 +234,6 @@ export const hrmsMockHandlers = {
         updatedAt: new Date().toISOString(),
       };
     }
-
     return createMockEnvelope(newMaintenance, 'Asset maintenance scheduled successfully');
   },
   ...otherAttendanceHandlers,

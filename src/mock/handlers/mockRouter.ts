@@ -39,6 +39,17 @@ export async function routeMockRequest<T>(
       const res = await hrmsMockHandlers.getWorkspaceStatus();
       return res as unknown as ApiResponseEnvelope<T>;
     }
+    if (cleanPath === 'hrms/leave/types') {
+      const res = await hrmsMockHandlers.getLeaveTypes();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath === 'hrms/leave/requests') {
+      const employeeId = searchParams.get('employeeId') || undefined;
+      const res = await hrmsMockHandlers.getLeaveRequests(employeeId);
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
     if (cleanPath === 'hrms/employees') {
       const res = await hrmsMockHandlers.getEmployees();
       return res as unknown as ApiResponseEnvelope<T>;
