@@ -100,6 +100,21 @@ export async function routeMockRequest<T>(
       return res as unknown as ApiResponseEnvelope<T>;
     }
 
+    if (cleanPath.includes('shift')) {
+      const res = await hrmsMockHandlers.getShifts();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath.includes('overtime')) {
+      const res = await hrmsMockHandlers.getOvertimeRecords();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath.includes('correction')) {
+      const res = await hrmsMockHandlers.getCorrections();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
     if (cleanPath === 'hrms/assets') {
       const res = await hrmsMockHandlers.getAssets();
       return res as unknown as ApiResponseEnvelope<T>;

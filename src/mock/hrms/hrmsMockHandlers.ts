@@ -29,7 +29,9 @@ import {
   mockAssetMaintenance,
 } from './hrmsMockData';
 import { delay, createMockEnvelope } from '../data/commonMockData';
+import { attendanceMockHandlers } from './attendanceMockHandlers';
 import { leaveMockHandlers } from './leaveMockHandlers';
+
 
 // Mutable in-memory state initialized from mock data
 const state = {
@@ -43,6 +45,8 @@ const state = {
   assignments: [...mockAssetAssignments],
   maintenance: [...mockAssetMaintenance],
 };
+
+const { getAttendanceRecords: _unusedAttendance, ...otherAttendanceHandlers } = attendanceMockHandlers;
 
 export const hrmsMockHandlers = {
   async getWorkspaceStatus(): Promise<ApiResponseEnvelope<HrmsWorkspaceStatus>> {
@@ -125,10 +129,10 @@ export const hrmsMockHandlers = {
     return createMockEnvelope(filtered, 'Leave balances loaded successfully');
   },
 
-  async getAttendanceRecords(employeeId?: string): Promise<ApiResponseEnvelope<AttendanceRecord[]>> {
+  async getAttendanceRecords(filter?: string): Promise<ApiResponseEnvelope<AttendanceRecord[]>> {
     await delay(80);
-    const filtered = employeeId
-      ? state.attendance.filter((a) => a.employeeId === employeeId)
+    const filtered = filter
+      ? state.attendance.filter((a) => a.employeeId === filter || a.date === filter)
       : [...state.attendance];
     return createMockEnvelope(filtered, 'Attendance records loaded successfully');
   },
@@ -232,4 +236,5 @@ export const hrmsMockHandlers = {
     }
     return createMockEnvelope(newMaintenance, 'Asset maintenance scheduled successfully');
   },
+  ...otherAttendanceHandlers,
 };
