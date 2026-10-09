@@ -1,5 +1,6 @@
 export * from './hrmsMockData';
 export * from './hrmsMockHandlers';
+export * from './payrollMockData';
 export { mockLeaveTypes, mockLeaveRequests } from './leaveMockData';
 export * from './leaveMockHandlers';
 export { mockSkillsByEmployee, mockCertificationsByEmployee } from './employeeMockData';
