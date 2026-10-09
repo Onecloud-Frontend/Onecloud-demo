@@ -1,0 +1,799 @@
+/* ==========================================================================
+   OneEnterprise HRMS - Pure Vanilla CSS Design System
+   Full module stylesheet adhering to tokens.css & dark enterprise palette
+   ========================================================================== */
+
+/* Keyframe Animations */
+@keyframes hrms-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hrms-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes hrms-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   1. Shared HRMS Sub-Navigation Bar
+   -------------------------------------------------------------------------- */
+.hrms-subnav-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.hrms-subnav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.hrms-subnav-link:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-card);
+}
+
+.hrms-subnav-link.active {
+  color: var(--team-c-accent);
+  background-color: var(--team-c-bg);
+  border: 1px solid var(--team-c-border);
+}
+
+.hrms-subnav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  background-color: var(--team-c-accent);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   1b. Scope Slices Tab Bar (Matching Payroll Page UI Standard)
+   -------------------------------------------------------------------------- */
+.hrms-tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  padding-bottom: 2px;
+  margin-bottom: 20px;
+}
+
+.hrms-tab-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.hrms-tab-button:hover {
+  color: var(--text-primary);
+}
+
+.hrms-tab-button.active {
+  color: var(--team-c-accent);
+  border-bottom-color: var(--team-c-accent);
+}
+
+/* --------------------------------------------------------------------------
+   2. Page Container & Header Bar
+   -------------------------------------------------------------------------- */
+.hrms-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+}
+
+.hrms-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hrms-breadcrumb {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.hrms-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hrms-title {
+  font-size: 26px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.hrms-dev-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  background-color: var(--team-c-bg);
+  color: var(--team-c-accent);
+  border: 1px solid var(--team-c-border);
+}
+
+.hrms-description {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  max-width: 780px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   3. KPI Summary Metric Cards Grid
+   -------------------------------------------------------------------------- */
+.hrms-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .hrms-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .hrms-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hrms-kpi-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.hrms-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.hrms-kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.hrms-kpi-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.hrms-kpi-icon-wrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hrms-kpi-icon-wrapper.purple {
+  background-color: var(--team-c-bg);
+  color: var(--team-c-accent);
+}
+
+.hrms-kpi-icon-wrapper.brand {
+  background-color: rgba(99, 102, 241, 0.15);
+  color: var(--brand-primary);
+}
+
+.hrms-kpi-icon-wrapper.success {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--status-success);
+}
+
+.hrms-kpi-icon-wrapper.warning {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: var(--status-warning);
+}
+
+.hrms-kpi-icon-wrapper.danger {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--status-danger);
+}
+
+.hrms-kpi-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.hrms-kpi-subtext {
+  font-size: 12px;
+  margin-top: 6px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Scope Navigation Tabs
+   -------------------------------------------------------------------------- */
+.hrms-tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.hrms-tab-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.hrms-tab-button:hover {
+  color: var(--text-primary);
+}
+
+.hrms-tab-button.active {
+  color: var(--team-c-accent);
+  border-bottom-color: var(--team-c-accent);
+}
+
+/* --------------------------------------------------------------------------
+   5. Card Containers & Toolbars
+   -------------------------------------------------------------------------- */
+.hrms-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hrms-toolbar {
+  padding: 16px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: rgba(15, 23, 42, 0.4);
+}
+
+.hrms-toolbar-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.hrms-search-wrapper {
+  position: relative;
+  min-width: 220px;
+  flex: 0 1 260px;
+}
+
+.hrms-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.hrms-search-input {
+  width: 100%;
+  padding: 8px 12px 8px 34px;
+  font-size: 13px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  outline: none;
+  font-family: inherit;
+  transition: border-color var(--transition-fast);
+}
+
+.hrms-search-input:focus {
+  border-color: var(--brand-primary);
+}
+
+.hrms-select-wrapper {
+  position: relative;
+}
+
+.hrms-select {
+  appearance: none;
+  padding: 8px 32px 8px 12px;
+  font-size: 13px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.hrms-select:focus {
+  border-color: var(--brand-primary);
+}
+
+.hrms-select-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   6. Buttons & Badges
+   -------------------------------------------------------------------------- */
+.hrms-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+  font-family: inherit;
+}
+
+.hrms-btn-primary {
+  background-color: var(--brand-primary);
+  color: #ffffff;
+  box-shadow: var(--brand-glow);
+}
+
+.hrms-btn-primary:hover {
+  background-color: var(--brand-primary-hover);
+}
+
+.hrms-btn-purple {
+  background-color: var(--team-c-accent);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.3);
+}
+
+.hrms-btn-purple:hover {
+  background-color: #9333ea;
+}
+
+.hrms-btn-secondary {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+.hrms-btn-secondary:hover {
+  border-color: var(--border-hover);
+  background-color: var(--bg-card-hover);
+}
+
+.hrms-btn-danger {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--status-danger);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.hrms-btn-danger:hover {
+  background-color: rgba(239, 68, 68, 0.25);
+}
+
+.hrms-btn-success {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--status-success);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.hrms-btn-success:hover {
+  background-color: rgba(16, 185, 129, 0.25);
+}
+
+.hrms-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hrms-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.hrms-status-pill.active,
+.hrms-status-pill.present,
+.hrms-status-pill.approved,
+.hrms-status-pill.paid,
+.hrms-status-pill.completed {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: var(--status-success);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.hrms-status-pill.pending,
+.hrms-status-pill.screening,
+.hrms-status-pill.review,
+.hrms-status-pill.in-progress {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: var(--status-warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.hrms-status-pill.rejected,
+.hrms-status-pill.on-hold,
+.hrms-status-pill.absent {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: var(--status-danger);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.hrms-status-pill.interviewing,
+.hrms-status-pill.processing,
+.hrms-status-pill.wfh,
+.hrms-status-pill.info {
+  background-color: rgba(59, 130, 246, 0.12);
+  color: var(--status-info);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.hrms-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.hrms-status-dot.pulsing {
+  animation: hrms-pulse 1.5s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   7. Data Tables & Pagination
+   -------------------------------------------------------------------------- */
+.hrms-table-responsive {
+  overflow-x: auto;
+}
+
+.hrms-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.hrms-table-head tr {
+  background-color: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hrms-table-th {
+  padding: 14px 16px;
+  font-weight: 600;
+}
+
+.hrms-table-th.action-col {
+  text-align: right;
+  padding-right: 20px;
+}
+
+.hrms-table-row {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--transition-fast);
+}
+
+.hrms-table-row:hover {
+  background-color: var(--bg-card-hover);
+}
+
+.hrms-table-td {
+  padding: 16px 16px;
+  vertical-align: middle;
+}
+
+.hrms-table-td.action-col {
+  text-align: right;
+  padding-right: 20px;
+}
+
+.hrms-footer {
+  padding: 14px 20px;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hrms-pagination-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.hrms-pagination-controls {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-elevated);
+  padding: 2px;
+  gap: 2px;
+}
+
+.hrms-page-btn {
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 12px;
+  background-color: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.hrms-page-btn:hover {
+  color: var(--text-primary);
+}
+
+.hrms-page-btn.active {
+  background-color: var(--team-c-accent);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   8. Viewport-Constrained Modal Windows (Strict max-h 90vh)
+   -------------------------------------------------------------------------- */
+.hrms-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(8, 12, 20, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 16px;
+  overflow: hidden;
+}
+
+.hrms-modal-dialog {
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+
+.hrms-modal-header {
+  flex-shrink: 0;
+  padding: 14px 22px;
+  background-color: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hrms-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: var(--text-primary);
+}
+
+.hrms-modal-footer {
+  flex-shrink: 0;
+  padding: 14px 22px;
+  background-color: var(--bg-elevated);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Specific Component Grids (Org Chart, Kanban, Leaves Meter, Courses)
+   -------------------------------------------------------------------------- */
+.hrms-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.hrms-kanban-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.hrms-kanban-column {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hrms-kanban-item {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color var(--transition-fast);
+}
+
+.hrms-kanban-item:hover {
+  border-color: var(--team-c-border);
+}
+
+.hrms-progress-track {
+  width: 100%;
+  height: 7px;
+  background-color: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.hrms-progress-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+.hrms-progress-bar.purple {
+  background-color: var(--team-c-accent);
+}
+
+.hrms-progress-bar.green {
+  background-color: var(--status-success);
+}
+
+.hrms-progress-bar.blue {
+  background-color: var(--brand-primary);
+}
+
+.hrms-progress-bar.amber {
+  background-color: var(--status-warning);
+}
