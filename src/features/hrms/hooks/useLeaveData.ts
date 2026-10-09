@@ -14,5 +14,3 @@ export function useLeaveData() {
     resetToDefault: leaveStore.resetToDefault.bind(leaveStore),
   };
 }
-
-export const useHrmsData = useLeaveData;

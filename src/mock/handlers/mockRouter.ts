@@ -39,6 +39,7 @@ export async function routeMockRequest<T>(
       const res = await hrmsMockHandlers.getWorkspaceStatus();
       return res as unknown as ApiResponseEnvelope<T>;
     }
+
     if (cleanPath === 'hrms/leave/types') {
       const res = await hrmsMockHandlers.getLeaveTypes();
       return res as unknown as ApiResponseEnvelope<T>;
@@ -130,6 +131,53 @@ export async function routeMockRequest<T>(
       }
       const assetId = searchParams.get('assetId') || undefined;
       const res = await hrmsMockHandlers.getAssetMaintenance(assetId);
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath.includes('goals')) {
+      if (method.toUpperCase() === 'POST' && _body) {
+        const res = await hrmsMockHandlers.createPerformanceGoal(_body as any);
+        return res as unknown as ApiResponseEnvelope<T>;
+      }
+      const res = await hrmsMockHandlers.getPerformanceGoals();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath.includes('kpis')) {
+      const res = await hrmsMockHandlers.getKPIs();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath.includes('reviews')) {
+      if (method.toUpperCase() === 'POST' && _body) {
+        const res = await hrmsMockHandlers.submitPerformanceReview(_body as any);
+        return res as unknown as ApiResponseEnvelope<T>;
+      }
+      const res = await hrmsMockHandlers.getPerformanceReviews();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath.includes('feedback')) {
+      if (method.toUpperCase() === 'POST' && _body) {
+        const res = await hrmsMockHandlers.submitPerformanceFeedback(_body as any);
+        return res as unknown as ApiResponseEnvelope<T>;
+      }
+      const res = await hrmsMockHandlers.getPerformanceFeedback();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath.includes('courses')) {
+      const res = await hrmsMockHandlers.getLearningCourses();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath.includes('learning-plans')) {
+      const res = await hrmsMockHandlers.getLearningPlans();
+      return res as unknown as ApiResponseEnvelope<T>;
+    }
+
+    if (cleanPath.includes('assessments')) {
+      const res = await hrmsMockHandlers.getAssessments();
       return res as unknown as ApiResponseEnvelope<T>;
     }
   }

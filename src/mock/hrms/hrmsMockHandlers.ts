@@ -15,6 +15,14 @@ import {
   AssignAssetPayload,
   ReturnAssetPayload,
   ScheduleMaintenancePayload,
+  PerformanceGoal,
+  KPI,
+  PerformanceReview,
+  PerformanceFeedback,
+  Course,
+  LearningPlan,
+  Assessment,
+  LearningProgress,
 } from '@features/hrms/types';
 import {
   mockHrmsWorkspaceStatus,
@@ -28,6 +36,15 @@ import {
   mockAssetAssignments,
   mockAssetMaintenance,
 } from './hrmsMockData';
+import {
+  mockPerformanceGoals,
+  mockKPIs,
+  mockPerformanceReviews,
+  mockPerformanceFeedbacks,
+  mockCourses,
+  mockLearningPlans,
+  mockAssessments,
+} from './performanceMockData';
 import { delay, createMockEnvelope } from '../data/commonMockData';
 import { leaveMockHandlers } from './leaveMockHandlers';
 
@@ -44,7 +61,19 @@ const state = {
   maintenance: [...mockAssetMaintenance],
 };
 
+// Mutable in-memory stores for Performance & Learning
+const goalsState: PerformanceGoal[] = [...mockPerformanceGoals];
+const kpisState: KPI[] = [...mockKPIs];
+const reviewsState: PerformanceReview[] = [...mockPerformanceReviews];
+const feedbacksState: PerformanceFeedback[] = [...mockPerformanceFeedbacks];
+const coursesState: Course[] = [...mockCourses];
+const learningPlansState: LearningPlan[] = [...mockLearningPlans];
+const assessmentsState: Assessment[] = [...mockAssessments];
+
 export const hrmsMockHandlers = {
+  /* =======================================================
+     WORKSPACE STATUS (Preserved Baseline)
+     ======================================================= */
   async getWorkspaceStatus(): Promise<ApiResponseEnvelope<HrmsWorkspaceStatus>> {
     await delay(100);
     return createMockEnvelope(mockHrmsWorkspaceStatus, 'HRMS workspace baseline loaded from mock adapter');
@@ -231,5 +260,153 @@ export const hrmsMockHandlers = {
       };
     }
     return createMockEnvelope(newMaintenance, 'Asset maintenance scheduled successfully');
+  },
+
+  /* =======================================================
+     HRMS-DEV-06: PERFORMANCE GOALS & OKRs
+     ======================================================= */
+  async getPerformanceGoals(employeeId?: string): Promise<ApiResponseEnvelope<PerformanceGoal[]>> {
+    await delay(200);
+    const result = employeeId ? goalsState.filter((g) => g.employeeId === employeeId) : goalsState;
+    return createMockEnvelope([...result], 'Performance goals loaded successfully');
+  },
+
+  async createPerformanceGoal(
+    payload: Omit<PerformanceGoal, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<ApiResponseEnvelope<PerformanceGoal>> {
+    await delay(250);
+    const now = new Date().toISOString();
+    const newGoal: PerformanceGoal = {
+      ...payload,
+      id: `goal-${Date.now()}`,
+      createdAt: now,
+      updatedAt: now,
+    };
+    goalsState.unshift(newGoal);
+    return createMockEnvelope(newGoal, 'Performance goal created successfully');
+  },
+
+  async updatePerformanceGoalProgress(
+    id: string,
+    progress: number
+  ): Promise<ApiResponseEnvelope<PerformanceGoal | null>> {
+    await delay(180);
+    const goal = goalsState.find((g) => g.id === id);
+    if (!goal) {
+      return {
+        success: false,
+        data: null,
+        message: `Performance goal with id ${id} not found`,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    goal.achievedValue = progress;
+    if (goal.targetValue && progress >= goal.targetValue) {
+      goal.status = 'COMPLETED';
+    } else if (progress > 0) {
+      goal.status = 'IN_PROGRESS';
+    }
+    goal.updatedAt = new Date().toISOString();
+    return createMockEnvelope(goal, 'Goal progress updated successfully');
+  },
+
+  /* =======================================================
+     HRMS-DEV-06: DEPARTMENT KPIS
+     ======================================================= */
+  async getKPIs(departmentId?: string): Promise<ApiResponseEnvelope<KPI[]>> {
+    await delay(180);
+    const result = departmentId ? kpisState.filter((k) => k.departmentId === departmentId) : kpisState;
+    return createMockEnvelope([...result], 'Department KPIs loaded successfully');
+  },
+
+  /* =======================================================
+     HRMS-DEV-06: APPRAISAL REVIEWS
+     ======================================================= */
+  async getPerformanceReviews(employeeId?: string): Promise<ApiResponseEnvelope<PerformanceReview[]>> {
+    await delay(200);
+    const result = employeeId ? reviewsState.filter((r) => r.employeeId === employeeId) : reviewsState;
+    return createMockEnvelope([...result], 'Performance reviews loaded successfully');
+  },
+
+  async submitPerformanceReview(
+    payload: Omit<PerformanceReview, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<ApiResponseEnvelope<PerformanceReview>> {
+    await delay(250);
+    const now = new Date().toISOString();
+    const newReview: PerformanceReview = {
+      ...payload,
+      id: `rev-${Date.now()}`,
+      createdAt: now,
+      updatedAt: now,
+    };
+    reviewsState.unshift(newReview);
+    return createMockEnvelope(newReview, 'Performance review submitted successfully');
+  },
+
+  /* =======================================================
+     HRMS-DEV-06: 360-DEGREE FEEDBACK
+     ======================================================= */
+  async getPerformanceFeedback(employeeId?: string): Promise<ApiResponseEnvelope<PerformanceFeedback[]>> {
+    await delay(200);
+    const result = employeeId ? feedbacksState.filter((f) => f.employeeId === employeeId) : feedbacksState;
+    return createMockEnvelope([...result], '360 degree performance feedbacks loaded successfully');
+  },
+
+  async submitPerformanceFeedback(
+    payload: Omit<PerformanceFeedback, 'id' | 'submittedAt'>
+  ): Promise<ApiResponseEnvelope<PerformanceFeedback>> {
+    await delay(220);
+    const newFeedback: PerformanceFeedback = {
+      ...payload,
+      id: `fb-${Date.now()}`,
+      submittedAt: new Date().toISOString(),
+    };
+    feedbacksState.unshift(newFeedback);
+    return createMockEnvelope(newFeedback, '360 degree feedback recorded successfully');
+  },
+
+  /* =======================================================
+     HRMS-DEV-06: LEARNING & TRAINING COURSES
+     ======================================================= */
+  async getLearningCourses(): Promise<ApiResponseEnvelope<Course[]>> {
+    await delay(200);
+    return createMockEnvelope([...coursesState], 'Learning courses loaded successfully');
+  },
+
+  async getLearningPlans(employeeId?: string): Promise<ApiResponseEnvelope<LearningPlan[]>> {
+    await delay(200);
+    const result = employeeId ? learningPlansState.filter((p) => p.employeeId === employeeId) : learningPlansState;
+    return createMockEnvelope([...result], 'Learning plans loaded successfully');
+  },
+
+  async getAssessments(courseId?: string): Promise<ApiResponseEnvelope<Assessment[]>> {
+    await delay(180);
+    const result = courseId ? assessmentsState.filter((a) => a.courseId === courseId) : assessmentsState;
+    return createMockEnvelope([...result], 'Assessments loaded successfully');
+  },
+
+  async enrollCourse(
+    employeeId: string,
+    courseId: string
+  ): Promise<ApiResponseEnvelope<LearningProgress>> {
+    await delay(220);
+    const course = coursesState.find((c) => c.id === courseId);
+    if (!course) {
+      return {
+        success: false,
+        data: null as unknown as LearningProgress,
+        message: `Course with id ${courseId} not found`,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    const newProgress: LearningProgress = {
+      id: `lp-prog-${Date.now()}`,
+      employeeId,
+      courseId,
+      status: 'IN_PROGRESS',
+      progressPercentage: 0,
+      completionDate: null,
+    };
+    return createMockEnvelope(newProgress, `Enrolled into ${course.title} successfully`);
   },
 };
