@@ -10,6 +10,7 @@ export * from './commonHrmsMockApi';
 export * from './universalHrmsMockApi';
 export { mockDepartments, mockEmployees, mockEmployeeDocuments } from './employeeMockData';
 export { RECRUITMENT_DEPARTMENTS } from './commonHrmsMockApi';
+export * from './performanceMockData';
 export {
   mockShifts,
   mockOvertimeRecords,

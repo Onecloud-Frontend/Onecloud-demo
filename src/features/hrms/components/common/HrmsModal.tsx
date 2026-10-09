@@ -64,9 +64,9 @@ export const HrmsModal: React.FC<HrmsModalProps> = ({
         style={{
           width: '100%',
           maxWidth,
-          backgroundColor: 'var(--bg-surface)',
-          border: '1px solid var(--border-subtle)',
-          borderRadius: 'var(--radius-xl)',
+          backgroundColor: 'var(--bg-surface, #1e293b)',
+          border: '1px solid var(--border-subtle, #334155)',
+          borderRadius: 'var(--radius-xl, 12px)',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
           display: 'flex',
           flexDirection: 'column',
@@ -78,11 +78,11 @@ export const HrmsModal: React.FC<HrmsModalProps> = ({
         <div
           style={{
             padding: '20px 24px',
-            borderBottom: '1px solid var(--border-subtle)',
+            borderBottom: '1px solid var(--border-subtle, #334155)',
             display: 'flex',
             alignItems: 'flex-start',
             justifyContent: 'space-between',
-            backgroundColor: 'var(--bg-card)',
+            backgroundColor: 'var(--bg-card, #1e293b)',
           }}
         >
           <div>
@@ -91,7 +91,7 @@ export const HrmsModal: React.FC<HrmsModalProps> = ({
                 margin: 0,
                 fontSize: '18px',
                 fontWeight: 600,
-                color: 'var(--text-primary)',
+                color: 'var(--text-primary, #f8fafc)',
                 fontFamily: 'var(--font-display)',
               }}
             >
@@ -102,7 +102,7 @@ export const HrmsModal: React.FC<HrmsModalProps> = ({
                 style={{
                   margin: '4px 0 0',
                   fontSize: '13px',
-                  color: 'var(--text-secondary)',
+                  color: 'var(--text-secondary, #94a3b8)',
                 }}
               >
                 {subtitle}
@@ -114,22 +114,22 @@ export const HrmsModal: React.FC<HrmsModalProps> = ({
             style={{
               background: 'transparent',
               border: 'none',
-              color: 'var(--text-muted)',
+              color: 'var(--text-muted, #64748b)',
               cursor: 'pointer',
               padding: '6px',
-              borderRadius: 'var(--radius-md)',
+              borderRadius: 'var(--radius-md, 6px)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'background-color 150ms ease, color 150ms ease',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--bg-elevated)';
-              e.currentTarget.style.color = 'var(--text-primary)';
+              e.currentTarget.style.backgroundColor = 'var(--bg-elevated, #334155)';
+              e.currentTarget.style.color = 'var(--text-primary, #f8fafc)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = 'var(--text-muted)';
+              e.currentTarget.style.color = 'var(--text-muted, #64748b)';
             }}
           >
             <X size={18} />
@@ -142,7 +142,7 @@ export const HrmsModal: React.FC<HrmsModalProps> = ({
             padding: '24px',
             overflowY: 'auto',
             flex: 1,
-            color: 'var(--text-primary)',
+            color: 'var(--text-primary, #f8fafc)',
             fontSize: '14px',
           }}
         >
@@ -154,7 +154,7 @@ export const HrmsModal: React.FC<HrmsModalProps> = ({
           <div
             style={{
               padding: '16px 24px',
-              borderTop: '1px solid var(--border-subtle)',
+              borderTop: '1px solid var(--border-subtle, #334155)',
               backgroundColor: 'rgba(15, 23, 42, 0.4)',
               display: 'flex',
               alignItems: 'center',
