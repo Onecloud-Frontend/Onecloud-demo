@@ -1,6 +1,7 @@
 import { apiClient } from '@core/api/client';
 import { ApiResponseEnvelope } from '@core/api/types';
 import { ErpWorkspaceStatus } from '../types';
+export { erpReportService } from './reportService';
 
 /**
  * ERP Domain Service

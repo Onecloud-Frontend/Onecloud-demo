@@ -20,6 +20,17 @@ export async function routeMockRequest<T>(
   const searchParams = new URLSearchParams(queryString || '');
   const cleanPath = basePath.toLowerCase().replace(/^\//, '');
 
+  if (normalizedPath.startsWith('erp')) {
+    if (normalizedPath === 'erp/reports' && method.toUpperCase() === 'GET') {
+      const response = await fetch('/api/erp/reports', {
+        headers: { Accept: 'application/json' },
+      });
+      if (!response.ok) {
+        throw new Error(`Mock API request failed with status ${response.status}.`);
+      }
+      return response.json() as Promise<ApiResponseEnvelope<T>>;
+    }
+    if (normalizedPath.includes('workspace-status') || normalizedPath === 'erp') {
   if (cleanPath.startsWith('erp')) {
     if (cleanPath.includes('workspace-status') || cleanPath === 'erp') {
       const res = await erpMockHandlers.getWorkspaceStatus();
