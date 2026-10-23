@@ -27,7 +27,7 @@ export const AppLayout: React.FC = () => {
               maxHeight: 'calc(100vh - 66px - 46px)',
             }}
           >
-            <div style={{ maxWidth: '1600px', margin: '0 auto' }}>
+            <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
               <Outlet />
             </div>
           </main>
