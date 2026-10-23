@@ -1,5 +1,7 @@
+@import 'tailwindcss';
 @import './theme/tokens.css';
 
+@layer base {
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -147,4 +149,5 @@ code, pre {
   background: rgba(244, 63, 94, 0.12);
   color: #fb7185;
   border: 1px solid rgba(244, 63, 94, 0.3);
+}
 }
