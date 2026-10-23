@@ -449,6 +449,7 @@
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	align-items: stretch;
 	gap: 16px;
+	margin-bottom: 22px;
 }
 
 .erp-report-visual-grid > .erp-report-panel,
@@ -546,4 +547,3 @@
   from { transform: scale(0); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
-
