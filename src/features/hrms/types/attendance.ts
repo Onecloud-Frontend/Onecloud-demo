@@ -76,3 +76,14 @@ export interface AttendanceCorrection {
   reviewedAt: string | null;
   createdAt: string;
 }
+
+export interface ShiftAssignment {
+  id: string;
+  employeeId: string;
+  shiftId: string;
+  startDate: string;
+  endDate?: string;
+  rotationPattern: 'FIXED' | 'WEEKLY' | 'BIWEEKLY' | 'MONTHLY';
+  notes?: string;
+}
+

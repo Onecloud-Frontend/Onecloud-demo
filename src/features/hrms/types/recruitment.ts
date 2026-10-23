@@ -7,10 +7,13 @@ import type { EmploymentType } from './employee';
 
 export type RequisitionStatus =
   | 'DRAFT'
+  | 'PENDING_APPROVAL'
+  | 'APPROVED'
   | 'OPEN'
   | 'ON_HOLD'
   | 'FILLED'
-  | 'CANCELLED';
+  | 'CANCELLED'
+  | 'REJECTED';
 
 export interface JobRequisition {
   id: string;
@@ -46,6 +49,7 @@ export interface JobPosting {
 
 export type CandidateStatus =
   | 'NEW'
+  | 'APPLIED'
   | 'SCREENING'
   | 'INTERVIEWING'
   | 'OFFERED'
@@ -66,6 +70,7 @@ export interface Candidate {
   appliedDate: string;
   createdAt: string;
   updatedAt: string;
+  jobPostingId?: string;
 }
 
 export type InterviewStatus =
@@ -99,4 +104,52 @@ export interface CandidateEvaluation {
   overallRecommendation: 'STRONG_HIRE' | 'HIRE' | 'NEUTRAL' | 'NO_HIRE';
   notes: string;
   submittedAt: string;
+}
+
+export type OfferStatus =
+  | 'DRAFT'
+  | 'ISSUED'
+  | 'ACCEPTED'
+  | 'DECLINED'
+  | 'EXPIRED';
+
+export interface OfferLetter {
+  id: string;
+  candidateId: string;
+  candidateName: string;
+  jobTitle: string;
+  departmentId: string;
+  offeredSalary: number;
+  joiningDate: string;
+  expiryDate: string;
+  status: OfferStatus;
+  issuedBy: string;
+  issuedAt: string;
+  acceptedAt?: string | null;
+  terms?: string;
+  transferredToEmployeeId?: string | null;
+  transferredEmployeeCode?: string | null;
+  onboardedAt?: string | null;
+}
+
+export interface HrmsInsurancePlan {
+  id: string;
+  planName: string;
+  provider: string;
+  policyType: 'HEALTH' | 'TERM_LIFE' | 'ACCIDENTAL' | 'DENTAL_VISION';
+  coverageAmount: number;
+  premiumMonthly: number;
+  employerContributionPercent: number;
+  description: string;
+}
+
+export interface CandidateInsuranceEnrollment {
+  id: string;
+  candidateId: string;
+  candidateName: string;
+  offerId: string;
+  planId: string;
+  planName: string;
+  status: 'PENDING_ONBOARDING' | 'ACTIVE' | 'WAIVED';
+  effectiveDate: string;
 }

@@ -7,8 +7,21 @@ import { routeMockRequest } from './handlers/mockRouter';
  * Fulfills the IApiClient interface contract during the pre-backend phase.
  */
 export const mockAdapter: IApiClient = {
-  async get<T>(path: string, _params?: Record<string, unknown> | PaginationParams): Promise<ApiResponseEnvelope<T>> {
-    return routeMockRequest<T>('GET', path);
+  async get<T>(path: string, params?: Record<string, unknown> | PaginationParams): Promise<ApiResponseEnvelope<T>> {
+    let url = path;
+    if (params && Object.keys(params).length > 0) {
+      const searchParams = new URLSearchParams();
+      for (const [key, val] of Object.entries(params)) {
+        if (val !== undefined && val !== null) {
+          searchParams.append(key, String(val));
+        }
+      }
+      const qs = searchParams.toString();
+      if (qs) {
+        url = url.includes('?') ? `${url}&${qs}` : `${url}?${qs}`;
+      }
+    }
+    return routeMockRequest<T>('GET', url);
   },
 
   async post<T>(path: string, body?: unknown): Promise<ApiResponseEnvelope<T>> {

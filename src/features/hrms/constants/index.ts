@@ -4,3 +4,6 @@
  */
 export const HRMS_FEATURE_CODE = 'FEAT-HRMS';
 export const HRMS_TEAM_OWNER = 'Team 3';
+
+export * from './attendanceConstants';
+

@@ -62,16 +62,95 @@ export interface PayrollRun {
   updatedAt: string;
 }
 
+export type PayrollStatus = 'Paid' | 'Processing' | 'Review' | 'On Hold' | 'Pending';
+
+export interface SalaryBreakdown {
+  basicSalary: number;
+  houseRentAllowance: number;
+  specialAllowance: number;
+  conveyanceAllowance: number;
+  medicalAllowance: number;
+  performanceBonus: number;
+  grossSalary: number;
+}
+
+export interface StatutoryDeduction {
+  providentFund: number; // PF (12% of Basic)
+  employeeStateInsurance: number; // ESI (0.75% of Gross if applicable)
+  professionalTax: number; // PT (~200 standard)
+  taxDeductedAtSource: number; // TDS / Income Tax
+  healthAndEducationCess: number; // 4% of TDS
+  totalDeductions: number;
+}
+
 export interface PayrollRecord {
   id: string;
-  payrollRunId: string;
+  payrollCode: string;
   employeeId: string;
-  baseSalary: number;
-  grossEarnings: number;
-  totalDeductions: number;
+  employeeName: string;
+  employeeAvatar?: string;
+  department: string;
+  designation: string;
+  workEmail: string;
+  annualCtc: number;
+  monthlyCtc: number;
+  earnings: SalaryBreakdown;
+  deductions: StatutoryDeduction;
+  netPayable: number;
+  payPeriod: string;
+  paymentDate: string;
+  bankAccountMasked: string;
+  panNumber: string;
+  pfUan: string;
+  status: PayrollStatus;
+  remarks?: string;
+
+  // Canonical compatibility fields
+  payrollRunId?: string;
+  baseSalary?: number;
+  grossEarnings?: number;
+  netPay?: number;
+  paymentStatus?: 'PENDING' | 'PROCESSED' | 'FAILED';
+}
+
+export interface PayrollMetrics {
+  totalMonthlyPayroll: number;
+  payrollGrowthPercentage: number;
+  activeEmployeesCount: number;
+  disbursementRatePercentage: number;
+  pendingReviewsCount: number;
+  pendingDaysNotice: number;
+  statutoryHoldsCount: number;
+  statutoryNoticeText: string;
+}
+
+export interface PaySlip {
+  slipId: string;
+  payrollRecordId: string;
+  employeeId: string;
+  employeeName: string;
+  designation: string;
+  department: string;
+  panNumber: string;
+  pfUan: string;
+  bankAccount: string;
+  bankName: string;
+  payPeriod: string;
+  paymentDate: string;
+  daysWorked: number;
+  lossOfPayDays: number;
+  earnings: SalaryBreakdown;
+  deductions: StatutoryDeduction;
   netPay: number;
-  paymentStatus: 'PENDING' | 'PROCESSED' | 'FAILED';
-  paymentDate: string | null;
+  netPayInWords: string;
+  generatedDate: string;
+}
+
+export interface PayrollFilterOptions {
+  searchQuery?: string;
+  department?: string;
+  payPeriod?: string;
+  status?: PayrollStatus | 'All';
 }
 
 export interface PayslipComponent {
