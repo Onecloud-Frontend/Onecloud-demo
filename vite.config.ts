@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite';
+import { erpMockApi } from './src/mock/erp/erpMockApi';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), erpMockApi()],
   resolve: {
     alias: {
       '@app': path.resolve(__dirname, './src/app'),
